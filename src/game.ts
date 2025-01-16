@@ -1,42 +1,65 @@
+import { Score } from "p5";
+
+
 class Game {
-  private position: p5.Vector;
-  private isCircleVisible: boolean;
+  //aktivera de olika scenerna när du ska börja bygga//
+ /* 
+private gameOverMenu: GameOverMenu;
+private pauseMenu: PauseMenu;
+private startMenu: StartMenu;
+private gameWorld: GameWorld;
+private activeScene: Scene;
+private startScene: Scene;
+*/
+
+
+ private position: p5.Vector;
+
 
   constructor() {
-    this.position = createVector(width * 0.5, height * 0.5);
-    this.isCircleVisible = false;
   }
 
   public update() {
-    this.position.set(mouseX, mouseY);
-    this.isCircleVisible = mouseIsPressed;
   }
 
   public draw() {
     background("blue");
-    this.drawText();
 
-    if (this.isCircleVisible) {
-      this.drawCircle();
-    }
+  
+}
+}
+
+class GameWorld {
+  private gameEntities: Entity[];
+  private endOfGame: boolean;
+  private score: Score;
+  private pauseButton: Button;
+  private background: String;
+}
+
+
+class Entity {
+  private with: Number;
+  private height: Number;
+  private x: Number;
+  private y: Number;
+  private image: URl;
+
+  constructor() {
   }
 
-  public drawText() {
-    push();
-    fill("white");
-    textSize(width * 0.1);
-    textStyle("bold");
-    textAlign("center");
-    text("Click & Drag", width * 0.5, height * 0.5);
-    pop();
+  public update() {
   }
 
-  public drawCircle() {
-    push();
-    fill(0, 255, 0, 200);
-    stroke("white");
-    strokeWeight(width * 0.01);
-    circle(this.position.x, this.position.y, width * 0.2);
-    pop();
+  public draw() {
   }
 }
+
+class Player extends Entity{}
+
+
+class Flower extends Entity{}
+
+class Honey extends Entity{}
+
+class Enemy extends Entity{}
