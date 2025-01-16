@@ -1,6 +1,6 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
-let cnv: any; // Global variabel för canvas
+let cnv: p5.Renderer; // Global variabel för canvas
 
 /**
  * Built in preload function in P5
