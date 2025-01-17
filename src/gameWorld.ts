@@ -23,3 +23,4 @@ class GameWorld implements Scene {
       gameEntitie.draw();
   }
 }
+}
