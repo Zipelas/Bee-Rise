@@ -1,7 +1,7 @@
 /// <reference path="gameWorld.ts" />
 
 class Entity {
-  private position: p5.Vector;
+  protected position: p5.Vector;
   private size: p5.Vector;
   private image: p5.Image;
   protected velocity: p5.Vector;

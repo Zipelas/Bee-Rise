@@ -21,6 +21,5 @@ class GameWorld implements Scene {
     background("#2a9ec7");
     for (const gameEntitie of this.gameEntities) {
       gameEntitie.draw();
-    }
   }
 }
