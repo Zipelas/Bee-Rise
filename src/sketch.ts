@@ -1,6 +1,9 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
-let cnv: p5.Renderer; // Global variabel för canvas
+let cnv: p5.Renderer;
+let music: {
+  mystery: p5.SoundFile;
+}; // Global variabel för canvas
 
 /**
  * Built in preload function in P5
@@ -8,6 +11,9 @@ let cnv: p5.Renderer; // Global variabel för canvas
  * sound files, images etc...
  */
 function preload() {
+  music = {
+    mystery: loadSound()
+  }
 }
 
 /**
@@ -20,6 +26,7 @@ function preload() {
 function setup() {
   cnv = createCanvas(500, windowHeight);
   frameRate(60);
+  music.mystery.setVolume(0.8);
 
   let x = (windowWidth - width) / 2; // Horisontellt centrerat
   let y = (windowHeight - height) / 2; // Vertikalt centrerat

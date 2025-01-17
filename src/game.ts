@@ -12,7 +12,7 @@ class Game {
   public update() {
     this.activeScene.update();
   }
-
+  
   public draw() {
     this.activeScene.draw();
   }
