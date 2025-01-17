@@ -1,6 +1,5 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
-let cnv: p5.Renderer;
 let music: {
   mystery: p5.SoundFile;
 }; // Global variabel för canvas
@@ -12,7 +11,7 @@ let music: {
  */
 function preload() {
   music = {
-    mystery: loadSound()
+    mystery: loadSound("/assets/music/mystery.mp3")
   }
 }
 
@@ -24,13 +23,10 @@ function preload() {
  */
 
 function setup() {
-  cnv = createCanvas(500, windowHeight);
+ createCanvas(windowWidth, windowHeight);
   frameRate(60);
   music.mystery.setVolume(0.8);
 
-  let x = (windowWidth - width) / 2; // Horisontellt centrerat
-  let y = (windowHeight - height) / 2; // Vertikalt centrerat
-  cnv.position(x, y);
 
   game = new Game();
 }
@@ -46,11 +42,7 @@ function draw() {
 }
 
 function windowResized() {
-  resizeCanvas(500, windowHeight);
-
-  let x = (windowWidth - width) / 2; // Horisontellt centrerat
-  let y = (windowHeight - height) / 2; // Vertikalt centrerat
-  cnv.position(x, y);
+  resizeCanvas(windowWidth, windowHeight);
 }
 
 
