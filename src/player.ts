@@ -1,3 +1,4 @@
+
 /// sumaya´s code 
 /*class Player extends Entity{
     private playerName: string;
@@ -34,7 +35,11 @@ function setup() {
 }*/
 /// <reference path="entity.ts" />*
 
-class Player extends Entity{
+
+/// <reference path="entity.ts" />
+
+
+class Player extends Entity {
   private jumpStrength: number = 7;
   private gravity: number = 0.2;
   private groundLevel: number; 

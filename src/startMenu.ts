@@ -3,12 +3,20 @@
 class StartMenu implements Scene {
   private clouds: Moln[] = [];
   private flowers: Flower[] = [];
+
   //private player: Player;
+
+  // private player: Player;
+
 
   constructor() {
     this.initializeClouds();
     this.initializeFlowers();
+
     //this.initializePlayer();
+
+    // this.initializePlayer();
+
   }
 
   private initializeClouds() {
@@ -37,34 +45,41 @@ class StartMenu implements Scene {
   }
 }
 
+
   /*rivate initializePlayer() {
     // Initialize the player using the preloaded image
     this.player = new Player(200, 200, 150, 150, playerImage, "Player 1", 0, false, false);
   }
 
-  public update() {
-    for (let cloud of this.clouds) {
-      cloud.update();
-    }
+  // private initializePlayer() {
+  //   // Initialize the player using the preloaded image
+  //   this.player = new Player(200, 200, 150, 150, playerImage, "Player 1", 0, false, false);
+  // }
 
-    for (let flower of this.flowers) {
-      flower.update();
-    }
 
-    // Update the player's position based on key presses
-    if (keyIsDown(RIGHT_ARROW)) {
-      this.player["keyPressRight"] = true;
-      this.player["keyPressLeft"] = false;
-    } else if (keyIsDown(LEFT_ARROW)) {
-      this.player["keyPressRight"] = false;
-      this.player["keyPressLeft"] = true;
-    } else {
-      this.player["keyPressRight"] = false;
-      this.player["keyPressLeft"] = false;
-    }
+  // public update() {
+  //   for (let cloud of this.clouds) {
+  //     cloud.update();
+  //   }
 
-    this.player.update();
-  }
+  //   for (let flower of this.flowers) {
+  //     flower.update();
+  //   }
+
+  //   // Update the player's position based on key presses
+  //   if (keyIsDown(RIGHT_ARROW)) {
+  //     this.player["keyPressRight"] = true;
+  //     this.player["keyPressLeft"] = false;
+  //   } else if (keyIsDown(LEFT_ARROW)) {
+  //     this.player["keyPressRight"] = false;
+  //     this.player["keyPressLeft"] = true;
+  //   } else {
+  //     this.player["keyPressRight"] = false;
+  //     this.player["keyPressLeft"] = false;
+  //   }
+
+  //   this.player.update();
+  // }
 
   public draw() {
     background("#87CEEB"); // Sky color
@@ -78,7 +93,7 @@ class StartMenu implements Scene {
     }
 
     // Draw the player
-    this.player.draw();
+    // this.player.draw();
   }
 }*/
 
@@ -101,6 +116,6 @@ function setup() {
 
 function draw() {
   // Update and render the StartMenu
-  startMenu.update();
+  // startMenu.update();
   startMenu.draw();
 }

@@ -19,11 +19,13 @@ let images: {
  * sound files, images etc...
  */
 
+
 /*function preload() {
   //music = {
     mystery: loadSound("/assets/music/mystery.mp3")
   }
 }*/
+
 
 function preload() {
   // music = {
@@ -51,7 +53,9 @@ function setup() {
 
   //music.mystery.setVolume(0.8);
 
+
   // music.mystery.setVolume(0.8);
+
 
 
 
