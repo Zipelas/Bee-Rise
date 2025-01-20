@@ -18,7 +18,7 @@ class StartMenu implements Scene {
     strokeWeight(8);
     this.drawTextWithLetterSpacing(
       "Bee Rise",
-      width / 2 - 300,
+      width / 2 - 345,
       height / 4,
       150,
       10,
@@ -29,9 +29,9 @@ class StartMenu implements Scene {
   }
 
   private drawInstructions() {
-    const backgroundX = width / 2 - 300;
-    const backgroundY = height / 2 + 30;
-    const backgroundWidth = 600;
+    const backgroundX = width / 2 - 255;
+    const backgroundY = height / 2 + 10;
+    const backgroundWidth = 470;
     const backgroundHeight = 250;
     const cornerRadius = 150;
   
@@ -49,23 +49,24 @@ class StartMenu implements Scene {
   
     this.drawTextWithLetterSpacing(
       "Instruction",
-      width / 2 - 120,
+      width / 2 - 130,
       backgroundY + 40,
-      34,
+      32,
       3,
       "#000"
     );
-  
-    const imageWidth = 120;
-    const imageHeight = 50;
-    const imageX = width / 2 - imageWidth / 2;
-    const imageY = backgroundY + 80;
+
+    //Arrowkeys
+    const imageWidth = 180;
+    const imageHeight = 175;
+    const imageX = width / 2 -25 - imageWidth / 2;
+    const imageY = backgroundY + 60;
     image(this.arrowImage, imageX, imageY, imageWidth, imageHeight);
   
     this.drawTextWithLetterSpacing(
       "Go left",
-      imageX - 150,
-      imageY + 90,
+      imageX - 90,
+      imageY + 130,
       16,
       2,
       "#000"
@@ -73,16 +74,37 @@ class StartMenu implements Scene {
   
     this.drawTextWithLetterSpacing(
       "Go right",
-      imageX + imageWidth + 60,
-      imageY + 90,
+      imageX + imageWidth +20,
+      imageY + 130,
       16,
       2,
       "#000"
     );
   }
   
-
-
+  private drawTextWithLetterSpacing(
+    textContent: string,
+    x: number,
+    y: number,
+    fontSize: number,
+    letterSpacing: number,
+    textColor: string
+  ) {
+    textSize(fontSize);
+    textAlign(LEFT, CENTER);
+    fill(textColor);
+  
+    let currentX = x;
+    for (let i = 0; i < textContent.length; i++) {
+      const char = textContent[i];
+      text(char, currentX, y);
+      currentX += textWidth(char) + letterSpacing;
     }
+  }
 
+  private startGame() {
+    console.log("Game is starting...");
+    //logik för att byta till spelets huvudsakliga scen
+  }
 }
+
