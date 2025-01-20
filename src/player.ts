@@ -24,15 +24,15 @@
     }
     public onclick() {
     }
-}
+}*
 
 let player: Player; 
 
 function setup() {
     createCanvas(800, 600);
     player = new Player(100, 100, 50, 50, loadImage("assets/bee.png"), "Player 1", 0, false, false);
-
-/// <reference path="entity.ts" />
+}*/
+/// <reference path="entity.ts" />*
 
 class Player extends Entity{
   private jumpStrength: number = 7;
@@ -64,4 +64,5 @@ class Player extends Entity{
       this.velocity.y = -this.jumpStrength;
     }
 
-}*/
+}
+}

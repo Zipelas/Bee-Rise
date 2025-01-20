@@ -30,7 +30,6 @@ class Entity {
 
   public draw() {
     push()
-        image(this.image, this.position.x, this.position.y, this.size.x, this.size.y)
-        pop() 
+       
   }
 }

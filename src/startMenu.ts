@@ -3,12 +3,12 @@
 class StartMenu implements Scene {
   private clouds: Moln[] = [];
   private flowers: Flower[] = [];
-  private player: Player;
+  //private player: Player;
 
   constructor() {
     this.initializeClouds();
     this.initializeFlowers();
-    this.initializePlayer();
+    //this.initializePlayer();
   }
 
   private initializeClouds() {
@@ -29,12 +29,15 @@ class StartMenu implements Scene {
     for (let i = 0; i < 1; i++) {
       let x = random(width);
       let y = random(height);
-      let flower = new Flower(x, y, 100, 50, flowerImage); // Fixed size for flowers
+      let velocityX = random(-1, 1);
+      let velocityY = random(-1, 1);
+      let flower = new Flower(x, y, 100, 50, flowerImage, velocityX, velocityY); // Fixed size for flowers
       this.flowers.push(flower);
     }
   }
+}
 
-  private initializePlayer() {
+  /*rivate initializePlayer() {
     // Initialize the player using the preloaded image
     this.player = new Player(200, 200, 150, 150, playerImage, "Player 1", 0, false, false);
   }
@@ -77,7 +80,7 @@ class StartMenu implements Scene {
     // Draw the player
     this.player.draw();
   }
-}
+}*/
 
 let startMenu: StartMenu;
 let flowerImage: p5.Image;
