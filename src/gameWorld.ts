@@ -12,6 +12,15 @@ class GameWorld implements Scene {
     // this.pauseButton = pauseButton;
     // this.background = background; 
   }
+  update(): void {
+    
+  }
+  draw() {
+    Moln.draw(); // Draw the cloud
+  
+   
+  }
+
   update() {
     for (const gameEntitie of this.gameEntities) {
       gameEntitie.update();
@@ -23,4 +32,5 @@ class GameWorld implements Scene {
       gameEntitie.draw();
   }
 }
+
 }
