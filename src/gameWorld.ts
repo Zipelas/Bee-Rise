@@ -12,15 +12,7 @@ class GameWorld implements Scene {
     // this.pauseButton = pauseButton;
     // this.background = background; 
   }
-  update(): void {
-    
-  }
-  draw() {
-    Moln.draw(); // Draw the cloud
   
-   
-  }
-
   update() {
     for (const gameEntitie of this.gameEntities) {
       gameEntitie.update();
@@ -30,7 +22,9 @@ class GameWorld implements Scene {
     background("#2a9ec7");
     for (const gameEntitie of this.gameEntities) {
       gameEntitie.draw();
+    }
+
+    Moln.draw(); // Draw the cloud
   }
-}
 
 }

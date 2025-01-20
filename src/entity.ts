@@ -10,7 +10,6 @@ class Entity {
 
   protected position: p5.Vector;
   private size: p5.Vector;
-  private image: p5.Image;
   protected velocity: p5.Vector;
 
 

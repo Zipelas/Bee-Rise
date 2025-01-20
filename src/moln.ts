@@ -54,7 +54,3 @@ function preload() {
 }
 
 
-function draw() {
-
-}
-
