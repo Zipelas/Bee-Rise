@@ -1,19 +1,19 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
-let music: {
-  mystery: p5.SoundFile;
-}; // Global variabel för canvas
+//let music: {
+  //mystery: p5.SoundFile;
+//}; // Global variabel för canvas
 
 /**
  * Built in preload function in P5
  * This is a good place to load assets such as
  * sound files, images etc...
  */
-function preload() {
-  music = {
+/*function preload() {
+  //music = {
     mystery: loadSound("/assets/music/mystery.mp3")
   }
-}
+}*/
 
 /**
  * Built in setup function in P5
@@ -25,7 +25,7 @@ function preload() {
 function setup() {
  createCanvas(windowWidth, windowHeight);
   frameRate(60);
-  music.mystery.setVolume(0.8);
+  //music.mystery.setVolume(0.8);
 
 
   game = new Game();

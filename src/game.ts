@@ -16,6 +16,8 @@ class Game {
   public draw() {
     this.activeScene.draw();
   }
+
+  
 }
 
 
