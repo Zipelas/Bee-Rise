@@ -1,9 +1,11 @@
 /// <reference path="game.ts" />
 class GameOverMenu implements Scene {
+    private pauseImage: p5.Image;
     private repeatImage: p5.Image;
     private exitImage: p5.Image;
   
     constructor() {
+        this.pauseImage = loadImage("./assets/music/pause.png");
         this.repeatImage = loadImage("./assets/music/repeat.png");
         this.exitImage = loadImage("./assets/music/exit.png");
     }
@@ -13,14 +15,18 @@ class GameOverMenu implements Scene {
 
     public draw() {
         background("#2a9ec7")
+        const pauseImageWidth = 50; // Bredden på bilden (justera efter dina behov)
+        const pauseImageHeight = 50; // Höjden på bilden (justera efter dina behov)
+        const margin = 10;
+        image(this.pauseImage, width - pauseImageWidth - margin, margin, pauseImageWidth, pauseImageHeight);
         this.drawGameOverMenu()
-        image(this.exitImage, width / 2 - 25, height / 2 + 100, 50, 50);
-        image(this.repeatImage, width / 2 - 25, height / 2 + 150, 50, 50);
+        image(this.exitImage, width / 2 - -40, height / 2 + 20, 30, 30);
+        image(this.repeatImage, width / 2 - 220, height / 2 + 20, 30, 30);
     }
 
     private drawGameOverMenu() {
         const backgroundX = width / 2 - 255;
-        const backgroundY = height / 2 + 10;
+        const backgroundY = height / 2 + -110;
         const backgroundWidth = 470;
         const backgroundHeight = 250;
         const cornerRadius = 150;
@@ -39,9 +45,9 @@ class GameOverMenu implements Scene {
   
         this.drawTextWithLetterSpacing(
           "Game Over",
-          width / 2 - 190,
-          backgroundY + 50,
-          62,
+          width / 2 - 210,
+          backgroundY + 70,
+          72,
           3,
           "#EE0600"
         );
@@ -53,7 +59,7 @@ class GameOverMenu implements Scene {
             "Repeat",
             width / 2 - 180,
             backgroundY + 150,
-            16,
+            24,
             2,
             "#000"
         );
@@ -62,7 +68,7 @@ class GameOverMenu implements Scene {
             "Exit",
             width / 2 - -80,
             backgroundY + 150,
-            16,
+            24,
             2,
             "#000"
         );
