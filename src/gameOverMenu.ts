@@ -1,11 +1,9 @@
 /// <reference path="game.ts" />
 class GameOverMenu implements Scene {
-    private pauseImage: p5.Image;
     private repeatImage: p5.Image;
     private exitImage: p5.Image;
   
     constructor() {
-        this.pauseImage = loadImage("./assets/music/pause.png");
         this.repeatImage = loadImage("./assets/music/repeat.png");
         this.exitImage = loadImage("./assets/music/exit.png");
     }
@@ -15,10 +13,6 @@ class GameOverMenu implements Scene {
 
     public draw() {
         background("#2a9ec7")
-        const pauseImageWidth = 50; // Bredden på bilden (justera efter dina behov)
-        const pauseImageHeight = 50; // Höjden på bilden (justera efter dina behov)
-        const margin = 10;
-        image(this.pauseImage, width - pauseImageWidth - margin, margin, pauseImageWidth, pauseImageHeight);
         this.drawGameOverMenu()
         image(this.exitImage, width / 2 - -35, height / 2 + 45, 40 , 40);
         image(this.repeatImage, width / 2 - 220, height / 2 + 45, 40, 40);
