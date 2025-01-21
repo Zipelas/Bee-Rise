@@ -206,7 +206,7 @@ function draw() {
 
   // Update the volume based on the slider
   bgMusic.setVolume(volumeSlider.value());
-}
+}   
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
