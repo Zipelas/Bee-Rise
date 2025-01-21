@@ -1,12 +1,12 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
+let images: {
+  player: p5.Image;
+  flower: p5.Image;
+}
 // let music: {
 //   mystery: p5.SoundFile;
 // }; // Global variabel för canvas
-let images: {
-  player: p5.Image;
-}
-
 
 /**
  * Built in preload function in P5
@@ -14,26 +14,16 @@ let images: {
  * sound files, images etc...
  */
 
-
-/*function preload() {
-  //music = {
-    mystery: loadSound("/assets/music/mystery.mp3")
-  }
-}*/
-
-
 function preload() {
   // music = {
   //   mystery: loadSound("/assets/music/mystery.mp3")
   // }
-
-  
   images = {
     player: loadImage("/assets/images/bee.png"),
+    flower: loadImage("/assets/images/flower.png")
   };
 
 }
-
 
 /**
  * Built in setup function in P5
@@ -47,13 +37,6 @@ function setup() {
   frameRate(60);
 
   //music.mystery.setVolume(0.8);
-
-
-  // music.mystery.setVolume(0.8);
-
-
-
-
   game = new Game();
 }
 
@@ -66,6 +49,7 @@ function draw() {
   game.update();
   game.draw();
 }
+
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
