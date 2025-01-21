@@ -20,16 +20,16 @@ class GameOverMenu implements Scene {
         const margin = 10;
         image(this.pauseImage, width - pauseImageWidth - margin, margin, pauseImageWidth, pauseImageHeight);
         this.drawGameOverMenu()
-        image(this.exitImage, width / 2 - -40, height / 2 + 20, 30, 30);
-        image(this.repeatImage, width / 2 - 220, height / 2 + 20, 30, 30);
+        image(this.exitImage, width / 2 - -35, height / 2 + 45, 40 , 40);
+        image(this.repeatImage, width / 2 - 220, height / 2 + 45, 40, 40);
     }
 
     private drawGameOverMenu() {
-        const backgroundX = width / 2 - 255;
-        const backgroundY = height / 2 + -110;
-        const backgroundWidth = 470;
-        const backgroundHeight = 250;
-        const cornerRadius = 150;
+      const backgroundWidth = 650;
+      const backgroundHeight = 450;
+      const cornerRadius = 250;
+        const backgroundX = width / 2 - backgroundWidth / 2;
+        const backgroundY = height / 2 - backgroundHeight / 2;
         
         fill(255, 255, 255, 127); 
         noStroke();
@@ -42,11 +42,12 @@ class GameOverMenu implements Scene {
         );
 
         textFont("Modak");
-  
+        stroke(0);
+        strokeWeight(8);
         this.drawTextWithLetterSpacing(
           "Game Over",
           width / 2 - 210,
-          backgroundY + 70,
+          backgroundY + 170,
           72,
           3,
           "#EE0600"
@@ -54,21 +55,22 @@ class GameOverMenu implements Scene {
     
         
         textFont("Alfa Slab One");
-        
+        stroke(0);
+        strokeWeight(0);
         this.drawTextWithLetterSpacing(
             "Repeat",
-            width / 2 - 180,
-            backgroundY + 150,
-            24,
+            width / 2 - 170,
+            backgroundY + 300,
+            32,
             2,
             "#000"
         );
         
         this.drawTextWithLetterSpacing(
             "Exit",
-            width / 2 - -80,
-            backgroundY + 150,
-            24,
+            width / 2 - -90,
+            backgroundY + 300,
+            32,
             2,
             "#000"
         );
