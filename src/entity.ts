@@ -7,10 +7,10 @@ protected position: p5.Vector;
   private image: p5.Image
 
 
-  constructor(x: number, y: number, width: number, height: number, velocityX: number, velocityY: number, image: p5.Image) {
+  constructor(x: number, y: number, width: number, height: number, velocityXangle: number, velocityYangle: number, image: p5.Image) {
     this.position = createVector(x, y);
     this.size = createVector(width, height);
-    this. velocity = createVector(velocityX, velocityY)
+    this.velocity = createVector(velocityXangle, velocityYangle)
     this.image = image;
    
   }
