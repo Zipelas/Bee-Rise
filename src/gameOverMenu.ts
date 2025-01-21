@@ -14,8 +14,8 @@ class GameOverMenu implements Scene {
     public draw() {
         background("#2a9ec7")
         this.drawGameOverMenu()
-        image(this.exitImage, width / 2 - -35, height / 2 + 45, 40 , 40);
-        image(this.repeatImage, width / 2 - 220, height / 2 + 45, 40, 40);
+        image(this.exitImage, width / 2 - -35, height / 2 + 50, 40 , 40);
+        image(this.repeatImage, width / 2 - 220, height / 2 + 50, 40, 40);
     }
 
     private drawGameOverMenu() {
