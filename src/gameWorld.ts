@@ -1,6 +1,7 @@
 class GameWorld implements Scene {
   private gameEntities: Entity[];
   private background: string = '';
+  
 
   
 
