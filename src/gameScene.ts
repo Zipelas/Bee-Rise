@@ -1,4 +1,4 @@
-class GameScene implements Scene {
+/*class GameScene implements Scene {
     private clouds: Moln[] = [];
     private flowers: Flower[] = [];
     
@@ -82,4 +82,4 @@ class GameScene implements Scene {
     
     gameScene.update();
     gameScene.draw();
-  }
+  }*/

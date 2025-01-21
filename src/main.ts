@@ -1,6 +1,9 @@
 
 //---- GLOBAL VARIABLES ----//
 let game: Game;
+let images: {
+   cloud: p5.Image;
+}
 //let music: {
   //mystery: p5.SoundFile;
 //}; // Global variabel för canvas
@@ -10,11 +13,14 @@ let game: Game;
  * This is a good place to load assets such as
  * sound files, images etc...
  */
-/*function preload() {
-  //music = {
-    mystery: loadSound("/assets/music/mystery.mp3")
-  }
-}*/
+function preload() {
+  // //music = {
+  //   mystery: loadSound("/assets/music/mystery.mp3")
+  // }
+images = {
+  cloud: loadImage("assets/images/cloud.png")
+}
+}
 
 /**
  * Built in setup function in P5
@@ -23,12 +29,12 @@ let game: Game;
  * in the draw function belows
  */
 
-/*function setup() {
+function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(60);
   //music.mystery.setVolume(0.8);
 
-  game = new Game();
+  game = new Game;
 }
 
 /**
@@ -36,11 +42,7 @@ let game: Game;
  * This is a good place to call public methods of the object
  * you created in the setup function above
  */
-// function draw() {
-//   game.update();
-//   game.draw();
-// }
-
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+function draw() {
+ game.update();
+  game.draw();
 }
