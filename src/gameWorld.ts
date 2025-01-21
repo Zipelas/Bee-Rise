@@ -18,6 +18,7 @@ class GameWorld implements Scene {
       gameEntitie.update();
     }
   }
+  
   draw() {
     background("#2a9ec7");
     for (const gameEntitie of this.gameEntities) {

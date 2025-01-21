@@ -1,10 +1,5 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
-
-//let music: {
-  //mystery: p5.SoundFile;
-//}; // Global variabel för canvas
-
 // let music: {
 //   mystery: p5.SoundFile;
 // }; // Global variabel för canvas
