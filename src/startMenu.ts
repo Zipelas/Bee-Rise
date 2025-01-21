@@ -1,17 +1,62 @@
 class StartMenu implements Scene {
   private backgroundImage: p5.Image;
   private arrowImage: p5.Image;
+  private startButton: p5.Element;
 
   constructor() {
     this.backgroundImage = loadImage("./assets/music/background.jpg");
     this.arrowImage = loadImage("./assets/music/arrowkeys.png");
+
+    // Button
+    this.startButton = createButton("Play");
+    this.startButton.style("background-color", "#d20007");
+    this.startButton.style("color", "white");
+    this.startButton.style("font-size", "20px");
+    this.startButton.style("font-family", "'Alfa Slab One'");
+    this.startButton.style("padding", "10px 50px");
+    this.startButton.style("border", "2px solid black");
+    this.startButton.style("border-radius", "40px");
+    this.startButton.style("cursor", "pointer");
+    this.startButton.mousePressed(() => this.startGame());
+
+    // Lägg till pulsanimationen
+    this.startButton.style("animation", "pulse 1.5s infinite");
+
+    // Lägg till hover-effekt
+    this.startButton.mouseOver(() => {
+      this.startButton.style("background-color", "#f70a0f");
+    });
+    this.startButton.mouseOut(() => {
+      this.startButton.style("background-color", "#d20007");
+    });
+
+    // Lägg till pulsanimation till dokumentets `<style>`
+    const style = document.createElement("style");
+    style.textContent = `
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    `;
+    document.head.appendChild(style);
   }
 
-    public update() {
-        // Uppdateringslogik
-    }
-    public draw() {
-      image(this.backgroundImage, 0, 0, width, height);
+  public update() {
+    // Uppdateringslogik om det behövs
+  }
+
+  public draw() {
+    image(this.backgroundImage, 0, 0, width, height);
+
+   
+    this.startButton.position(windowWidth / 2 - 100, windowHeight / 2 - 90);
 
     textFont("Modak");
     stroke(0);
@@ -24,7 +69,7 @@ class StartMenu implements Scene {
       10,
       "#ffca00"
     );
-  
+
     this.drawInstructions();
   }
 
@@ -34,8 +79,8 @@ class StartMenu implements Scene {
     const backgroundWidth = 470;
     const backgroundHeight = 250;
     const cornerRadius = 150;
-  
-    fill(255, 255, 255, 127); 
+
+    fill(255, 255, 255, 127);
     noStroke();
     rect(
       backgroundX,
@@ -44,9 +89,9 @@ class StartMenu implements Scene {
       backgroundHeight,
       cornerRadius
     );
-  
+
     textFont("Alfa Slab One");
-  
+
     this.drawTextWithLetterSpacing(
       "Instruction",
       width / 2 - 130,
@@ -56,13 +101,13 @@ class StartMenu implements Scene {
       "#000"
     );
 
-    //Arrowkeys
+    // Arrowkeys
     const imageWidth = 180;
     const imageHeight = 175;
-    const imageX = width / 2 -25 - imageWidth / 2;
+    const imageX = width / 2 - 25 - imageWidth / 2;
     const imageY = backgroundY + 60;
     image(this.arrowImage, imageX, imageY, imageWidth, imageHeight);
-  
+
     this.drawTextWithLetterSpacing(
       "Go left",
       imageX - 90,
@@ -71,17 +116,17 @@ class StartMenu implements Scene {
       2,
       "#000"
     );
-  
+
     this.drawTextWithLetterSpacing(
       "Go right",
-      imageX + imageWidth +20,
+      imageX + imageWidth + 20,
       imageY + 130,
       16,
       2,
       "#000"
     );
   }
-  
+
   private drawTextWithLetterSpacing(
     textContent: string,
     x: number,
@@ -93,7 +138,7 @@ class StartMenu implements Scene {
     textSize(fontSize);
     textAlign(LEFT, CENTER);
     fill(textColor);
-  
+
     let currentX = x;
     for (let i = 0; i < textContent.length; i++) {
       const char = textContent[i];
@@ -104,7 +149,12 @@ class StartMenu implements Scene {
 
   private startGame() {
     console.log("Game is starting...");
-    //logik för att byta till spelets huvudsakliga scen
+    this.startButton.hide(); // Dölj knappen när spelet startar
+    // Logik för att byta till spelets huvudsakliga scen
+  }
+
+  public windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
   }
 }
 

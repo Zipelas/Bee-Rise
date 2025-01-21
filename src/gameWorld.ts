@@ -1,4 +1,4 @@
-/*class GameWorld implements Scene {
+class GameWorld implements Scene {
   private gameEntities: Entity[];
   // private endOfGame: boolean;
   // private score: Score;
@@ -12,13 +12,6 @@
     // this.pauseButton = pauseButton;
     // this.background = background; 
   }
-
-  //update(): void {
-    
-  }
-  /*draw() {
-    Moln.draw(); // Draw the cloud
-
   
   update() {
     for (const gameEntitie of this.gameEntities) {
@@ -30,8 +23,6 @@
     for (const gameEntitie of this.gameEntities) {
       gameEntitie.draw();
     }
-
-    Moln.draw(); // Draw the cloud
   }
 
-}*/
+}
