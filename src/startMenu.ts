@@ -158,4 +158,82 @@ class StartMenu implements Scene {
   }
 }
 
+let bgMusic;
+let startMenu;
+let playPauseButton;
+let volumeSlider;
 
+function preload() {
+  // Load assets
+  bgMusic = loadSound('./assets/music/startMenuSound.mp3');
+}
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+
+  // Start background music
+  bgMusic.loop(); // Loop the music
+  bgMusic.setVolume(0.5); // Set volume to 50%
+
+  // Create the StartMenu
+  startMenu = new StartMenu();
+
+  // Create Play/Pause Button
+  playPauseButton = createButton('Pause Music');
+  playPauseButton.style('font-size', '16px');
+  playPauseButton.style('padding', '5px 10px');
+  playPauseButton.style('background-color', '#007BFF'); // Set background color
+  playPauseButton.style('color', '#FFFFFF'); // Set text color
+  playPauseButton.style('border', 'none'); // Remove border
+  playPauseButton.style('border-radius', '5px'); // Rounded corners
+  playPauseButton.mousePressed(togglePlayPause);
+
+  // Add hover effects
+  playPauseButton.mouseOver(() => playPauseButton.style('background-color', '#0056b3'));
+  playPauseButton.mouseOut(() => playPauseButton.style('background-color', '#007BFF'));
+
+  // Create Volume Slider
+  volumeSlider = createSlider(0, 1, 0.5, 0.01); // Range 0 to 1, default 0.5, step 0.01
+  volumeSlider.style('width', '150px');
+
+  // Dynamically position UI elements relative to the canvas
+  positionControls();
+}
+
+function draw() {
+  // Delegate drawing to the StartMenu
+  startMenu.draw();
+
+  // Update the volume based on the slider
+  bgMusic.setVolume(volumeSlider.value());
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  startMenu.windowResized();
+
+  // Reposition controls when the window is resized
+  positionControls();
+}
+
+// Function to dynamically position controls
+function positionControls() {
+  const padding = 20;
+
+  // Position Play/Pause Button in the top-right corner relative to the canvas
+  playPauseButton.position(width - 120 - padding, padding);
+
+  // Position Volume Slider below the Play/Pause Button
+  volumeSlider.position(width - 140 - padding, playPauseButton.y + 40);
+}
+
+// Toggle Play/Pause Function
+function togglePlayPause() {
+  if (bgMusic.isPlaying()) {
+    bgMusic.pause();
+    playPauseButton.html('Play Music'); // Update button text
+  } else {
+    bgMusic.play();
+    playPauseButton.html('Pause Music'); // Update button text
+  }
+}
