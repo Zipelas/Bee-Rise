@@ -17,6 +17,7 @@ class StartMenu implements Scene {
     this.startButton.style("border", "2px solid black");
     this.startButton.style("border-radius", "40px");
     this.startButton.style("cursor", "pointer");
+    this.startButton.style("letter-spacing", "1px");
     this.startButton.mousePressed(() => this.startGame());
 
     // Lägg till pulsanimationen
@@ -94,10 +95,10 @@ class StartMenu implements Scene {
 
     this.drawTextWithLetterSpacing(
       "Instruction",
-      width / 2 - 130,
+      width / 2 - 125,
       backgroundY + 40,
       32,
-      3,
+      1,
       "#000"
     );
 
@@ -113,7 +114,7 @@ class StartMenu implements Scene {
       imageX - 90,
       imageY + 130,
       16,
-      2,
+      1,
       "#000"
     );
 
@@ -122,7 +123,7 @@ class StartMenu implements Scene {
       imageX + imageWidth + 20,
       imageY + 130,
       16,
-      2,
+      1,
       "#000"
     );
   }
@@ -180,21 +181,23 @@ function setup() {
 
   // Create Play/Pause Button
   playPauseButton = createButton('Pause Music');
-  playPauseButton.style('font-size', '16px');
-  playPauseButton.style('padding', '5px 10px');
-  playPauseButton.style('background-color', '#007BFF'); // Set background color
+  playPauseButton.style('font-size', '13px');
+  playPauseButton.style('padding', '5px 15px');
+  playPauseButton.style('background-color', '#d20007'); 
+  playPauseButton.style("font-family", "'Alfa Slab One'");// Set background color
   playPauseButton.style('color', '#FFFFFF'); // Set text color
-  playPauseButton.style('border', 'none'); // Remove border
-  playPauseButton.style('border-radius', '5px'); // Rounded corners
+  playPauseButton.style("border", "2px solid black");
+  playPauseButton.style('border-radius', '40px');
+  playPauseButton.style('letter-spacing', '1px');
   playPauseButton.mousePressed(togglePlayPause);
 
   // Add hover effects
-  playPauseButton.mouseOver(() => playPauseButton.style('background-color', '#0056b3'));
-  playPauseButton.mouseOut(() => playPauseButton.style('background-color', '#007BFF'));
+  playPauseButton.mouseOver(() => playPauseButton.style('background-color', '#f70a0f'));
+  playPauseButton.mouseOut(() => playPauseButton.style('background-color', '#d20007'));
 
   // Create Volume Slider
   volumeSlider = createSlider(0, 1, 0.5, 0.01); // Range 0 to 1, default 0.5, step 0.01
-  volumeSlider.style('width', '150px');
+  volumeSlider.style('width', '120px');
 
   // Dynamically position UI elements relative to the canvas
   positionControls();
@@ -224,7 +227,7 @@ function positionControls() {
   playPauseButton.position(width - 120 - padding, padding);
 
   // Position Volume Slider below the Play/Pause Button
-  volumeSlider.position(width - 140 - padding, playPauseButton.y + 40);
+  volumeSlider.position(width - 120 - padding, playPauseButton.y + 40);
 }
 
 // Toggle Play/Pause Function
