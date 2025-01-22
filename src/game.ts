@@ -2,7 +2,7 @@ class Game {
   private activeScene: Scene;
 
   constructor() {
-    this.activeScene = new StartMenu ();
+    this.activeScene = new PauseMenu ();
   }
 
   public changeScene(nextScene: Scene) {
