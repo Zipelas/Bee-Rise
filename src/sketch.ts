@@ -3,13 +3,12 @@ let game: Game;
 
 //let music: {
   //mystery: p5.SoundFile;
-//}; // Global variabel för canvas
-
-// let music: {
-//   mystery: p5.SoundFile;
-// }; // Global variabel för canvas
+//}
 let images: {
   player: p5.Image;
+  bird: p5.Image;
+  ufo: p5.Image;
+  plane: p5.Image;
 }
 
 
@@ -35,7 +34,10 @@ function preload() {
   
   images = {
     player: loadImage("/assets/images/bee.png"),
-  };
+    bird: loadImage("/assets/images/bird.gif"),
+    ufo: loadImage("/assets/images/ufo.gif"),
+    plane: loadImage("/assets/images/Plane.gif")
+};
 
 }
 
