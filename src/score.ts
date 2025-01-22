@@ -3,7 +3,7 @@ class Score {
     private currentHighScore: number;
     private currentScore: number;
     private position: p5.Vector;
-    private image: p5.Image; // Sun image
+    private image: p5.Image; 
   
     constructor(color: string, currentHighScore: number, currentScore: number, position: p5.Vector, image: p5.Image) {
       this.color = color;
@@ -17,10 +17,10 @@ class Score {
       this.currentScore++;
     }
   
-    // Draws the sun and the score
+   
     public draw(): void {
       push();
-      // Draw the sun image
+    
       image(this.image, this.position.x, this.position.y, 300, 300); // Adjust size as needed
   
       // Display the score text within the visible portion of the image

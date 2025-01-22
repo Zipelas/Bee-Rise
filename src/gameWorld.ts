@@ -50,7 +50,7 @@ class GameWorld implements Scene {
     }
 
   
-    //this.score.update();
+    this.score.update();
   }
 
   public draw(): void {
