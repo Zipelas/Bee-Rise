@@ -1,3 +1,4 @@
+/// <reference path="gameWorld.ts" />
 class Game {
   private activeScene: Scene;
 

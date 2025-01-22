@@ -3,6 +3,7 @@
 let game: Game;
 let images: {
    cloud: p5.Image;
+   score: p5.Image;
 }
 //let music: {
   //mystery: p5.SoundFile;
@@ -18,7 +19,8 @@ function preload() {
   //   mystery: loadSound("/assets/music/mystery.mp3")
   // }
 images = {
-  cloud: loadImage("assets/images/cloud.png")
+  cloud: loadImage("assets/images/cloud.png"),
+  score: loadImage("assets/images/sunny.png")
 }
 }
 
@@ -35,6 +37,7 @@ function setup() {
   //music.mystery.setVolume(0.8);
 
   game = new Game;
+  
 }
 
 /**
@@ -45,4 +48,8 @@ function setup() {
 function draw() {
  game.update();
   game.draw();
+} 
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight)
 }

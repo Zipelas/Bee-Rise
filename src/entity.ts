@@ -2,6 +2,7 @@ class Entity {
   protected position: p5.Vector;
   protected size: p5.Vector;
   protected velocity: p5.Vector;
+
   protected image: p5.Image;
 
   constructor(
@@ -20,7 +21,8 @@ class Entity {
   }
 
   public update() {
-    this.position.add(this.velocity);
+    this.position.x += this.velocity.x;
+    this.position.y += this.velocity.y;
   }
 
   public draw() {
