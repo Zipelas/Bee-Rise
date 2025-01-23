@@ -16,6 +16,7 @@ class GameOverMenu implements Scene {
         this.drawGameOverMenu()
         image(this.exitImage, width / 2 - -35, height / 2 + 50, 40 , 40);
         image(this.repeatImage, width / 2 - 220, height / 2 + 50, 40, 40);
+        this.drawButtons();
     }
 
     private drawGameOverMenu() {
@@ -90,4 +91,50 @@ class GameOverMenu implements Scene {
         }
       }
 
+      private drawButtons(): void {
+        // Dimensioner och position för "Repeat"-knappen
+        const buttonRepeatX = width / 2 - 20;
+        const buttonRepeatY = height / 2 - -40;
+        const buttonRepeatWidth = 200;
+        const buttonRepeatHeight = 50;
+    
+        // Dimensioner och position för "Exit"-knappen
+        const buttonExitX = width / 2 - 240;
+        const buttonExitY = height / 2 + 40;
+        const buttonExitWidth = 200;
+        const buttonExitHeight = 50;
+    
+        // Kontrollera om musen är över "Repeat"-knappen
+        if (
+            mouseX > buttonRepeatX &&
+            mouseX < buttonRepeatX + buttonRepeatWidth &&
+            mouseY > buttonRepeatY &&
+            mouseY < buttonRepeatY + buttonRepeatHeight
+        ) {
+            if (mouseIsPressed) {
+                console.log("Repeat button clicked");
+                // Lägg till logik för "Repeat"
+            }
+        }
+    
+        // Kontrollera om musen är över "Exit"-knappen
+        if (
+            mouseX > buttonExitX &&
+            mouseX < buttonExitX + buttonExitWidth &&
+            mouseY > buttonExitY &&
+            mouseY < buttonExitY + buttonExitHeight
+        ) {
+            if (mouseIsPressed) {
+                console.log("Exit button clicked");
+                // Lägg till logik för "Exit"
+            }
+        }
+    
+        // Rita rektanglar för knapparna (används för debugging)
+        noFill();
+        stroke(255, 0, 0);
+        rect(buttonRepeatX, buttonRepeatY, buttonRepeatWidth, buttonRepeatHeight);
+        rect(buttonExitX, buttonExitY, buttonExitWidth, buttonExitHeight);
+    }
+    
 }
