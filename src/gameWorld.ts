@@ -2,7 +2,7 @@ class GameWorld implements Scene {
   private gameEntities: Entity[];
 
   constructor() {
-    this.gameEntities = [new Player()];
+    this.gameEntities = [new Player(), this.createRandomEnemy()];
     this.addFlowers();
   }
 
