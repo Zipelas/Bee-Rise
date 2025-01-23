@@ -19,7 +19,7 @@ class GameWorld implements Scene {
     for (let i = 0; i < 5; i++) {
       let width = random(50, 150);  // Random cloud width
       let height = random(30, 80);  // Random cloud height
-      let x, y;
+      let x:any, y:any;
       let validPosition = false;
 
       // Ensure clouds do not overlap
@@ -50,7 +50,7 @@ class GameWorld implements Scene {
     }
 
   
-    this.score.update();
+    //this.score.update();
   }
 
   public draw(): void {
