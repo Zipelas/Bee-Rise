@@ -1,17 +1,16 @@
 class GameWorld implements Scene {
   private gameEntities: Entity[];
-  // private endOfGame: boolean;
-  // private score: Score;
-  // private pauseButton: Button;
-  // private background: string;
 
   constructor() {
-    this.gameEntities = [new Player(), this.createRandomEnemy()];
-    // new Enemy("bird"), new Enemy("ufo"), new Enemy("plane")
-    // this.endOfGame = endOfGame;
-    // this.score = score;
-    // this.pauseButton = pauseButton;
-    // this.background = background; 
+    this.gameEntities = [new Player()];
+    this.addFlowers();
+  }
+
+  private addFlowers() {
+    const numberOfFlowers = floor(random(5, 7));
+    for (let i = 0; i < numberOfFlowers; i++) {
+      this.gameEntities.push(new Flower());
+    }
   }
 
   private createRandomEnemy(): Enemy {
@@ -25,6 +24,7 @@ class GameWorld implements Scene {
       gameEntitie.update();
     }
   }
+  
   draw() {
     background("#2a9ec7");
     for (const gameEntitie of this.gameEntities) {

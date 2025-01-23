@@ -11,26 +11,22 @@ class PauseMenu implements Scene {
       this.buttonExit = buttonExit;
   }
 
-  public update(): void {
-
-  }
+  public update(): void {}
 
   public draw(): void {
       background(0);
       this.drawPause();
       this.drawButtons();
-
-      
   }
 
   private drawPause(): void {
       const backgroundWidth = 650;
       const backgroundHeight = 450;
       const cornerRadius = 250;
-  
+
       const backgroundX = width / 2 - backgroundWidth / 2;
       const backgroundY = height / 2 - backgroundHeight / 2;
-  
+
       stroke(0, 0, 0);
       strokeWeight(0.05);
       fill(255, 255, 255, 127);
@@ -43,23 +39,23 @@ class PauseMenu implements Scene {
       );
       textFont("Alfa Slab One");
 
-  this.drawTextWithLetterSpacing(
-    "Continue",
-    width / 2 - 80,
-    backgroundY + 190,
-    32,
-    3,
-    "#000"
-  );
+      this.drawTextWithLetterSpacing(
+          "Continue",
+          width / 2 - 80,
+          backgroundY + 190,
+          32,
+          3,
+          "#000"
+      );
 
-  this.drawTextWithLetterSpacing(
-      "Exit",
-      width / 2 - 80,
-      backgroundY + 250,
-      32,
-      3,
-      "#000"
-    );
+      this.drawTextWithLetterSpacing(
+          "Exit",
+          width / 2 - 80,
+          backgroundY + 250,
+          32,
+          3,
+          "#000"
+      );
   }
 
   private drawTextWithLetterSpacing(
@@ -69,22 +65,62 @@ class PauseMenu implements Scene {
       fontSize: number,
       letterSpacing: number,
       textColor: string
-    ) {
+  ) {
       textSize(fontSize);
       textAlign(LEFT, CENTER);
       fill(textColor);
-    
+
       let currentX = x;
       for (let i = 0; i < textContent.length; i++) {
-        const char = textContent[i];
-        text(char, currentX, y);
-        currentX += textWidth(char) + letterSpacing;
+          const char = textContent[i];
+          text(char, currentX, y);
+          currentX += textWidth(char) + letterSpacing;
       }
-    }
+  }
 
   private drawButtons(): void {
-      this.buttonContinue.draw();
-      this.buttonExit.draw();
+      // Calculate button dimensions and positions
+      const buttonContinueX = width / 2 - 180;
+      const buttonContinueY = height / 2 - 60;
+      const buttonContinueWidth = 290;
+      const buttonContinueHeight = 50;
+
+      const buttonExitX = width / 2 - 180;
+      const buttonExitY = height / 2 + 0;
+      const buttonExitWidth = 200;
+      const buttonExitHeight = 50;
+
+      // Check if mouse is over the buttons
+      if (
+          mouseX > buttonContinueX &&
+          mouseX < buttonContinueX + buttonContinueWidth &&
+          mouseY > buttonContinueY &&
+          mouseY < buttonContinueY + buttonContinueHeight
+      ) {
+          if (mouseIsPressed) {
+              console.log("Continue button clicked");
+              // Lägg till logik för "Continue"
+          }
+      }
+
+      if (
+          mouseX > buttonExitX &&
+          mouseX < buttonExitX + buttonExitWidth &&
+          mouseY > buttonExitY &&
+          mouseY < buttonExitY + buttonExitHeight
+      ) {
+          if (mouseIsPressed) {
+              console.log("Exit button clicked");
+              // Lägg till logik för "Exit"
+          }
+      }
+      
+
+      // Draw transparent rectangles for buttons (debugging)
+      noFill();
+      stroke(255, 0, 0); // Debug color for visualizing button areas
+      rect(buttonContinueX, buttonContinueY, buttonContinueWidth, buttonContinueHeight);
+      rect(buttonExitX, buttonExitY, buttonExitWidth, buttonExitHeight);
   }
 }
 
