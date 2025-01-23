@@ -1,151 +1,73 @@
 class PauseMenu implements Scene {
-  private title: string;
-  private image: p5.Image;
-  private buttonContinue: Button;
-  private buttonExit: Button;
+  private continueImage: p5.Image;
+  private exitImage: p5.Image;
+  private continueButton: Button;
+  private exitButton: Button;
+  private backgroundImage: p5.Image;
 
-  constructor(title: string, image: p5.Image, buttonContinue: Button, buttonExit: Button) {
-      this.title = title;
-      this.image = image;
-      this.buttonContinue = buttonContinue;
-      this.buttonExit = buttonExit;
+  constructor() {
+    this.continueImage = images.continueImage;
+    this.exitImage = images.exitImage;
+    this.backgroundImage = images.backgroundImage;
+
+    this.continueButton = new Button(
+      "Continue",
+      width * 0.5 + 50,
+      height * 0.43,
+      180,
+      60,
+      "#d20007",
+      "black",
+      this.continueImage
+    );
+
+    this.exitButton = new Button(
+      "Exit",
+      width * 0.5 + 50,
+      height * 0.54,
+      180,
+      60,
+      "#d20007",
+      "black",
+      this.exitImage
+    );
   }
 
-  public update(): void {}
-
-  public draw(): void {
-      background(0);
-      this.drawPause();
-      this.drawButtons();
+  public update() {
+    if (this.continueButton.isClicked()) {
+      // Change to scene A
+    }
+    if (this.exitButton.isClicked()) {
+      // Change to scene B
+    }
   }
 
-  private drawPause(): void {
-      const backgroundWidth = 650;
-      const backgroundHeight = 450;
-      const cornerRadius = 250;
+  public draw() {
+    // Draw background image
+    image(this.backgroundImage, 0, 0, width, height);
 
-      const backgroundX = width / 2 - backgroundWidth / 2;
-      const backgroundY = height / 2 - backgroundHeight / 2;
+    // Draw transparent rectangle background
+    this.drawTransparent(width * 0.5, height * 0.5, 900, 500, 250);
 
-      stroke(0, 0, 0);
-      strokeWeight(0.05);
-      fill(255, 255, 255, 127);
-      rect(
-          backgroundX,
-          backgroundY,
-          backgroundWidth,
-          backgroundHeight,
-          cornerRadius
-      );
-      textFont("Alfa Slab One");
-
-      this.drawTextWithLetterSpacing(
-          "Continue",
-          width / 2 - 80,
-          backgroundY + 190,
-          32,
-          3,
-          "#000"
-      );
-
-      this.drawTextWithLetterSpacing(
-          "Exit",
-          width / 2 - 80,
-          backgroundY + 250,
-          32,
-          3,
-          "#000"
-      );
+    // Draw buttons and icons
+    this.drawButtons();
   }
 
-  private drawTextWithLetterSpacing(
-      textContent: string,
-      x: number,
-      y: number,
-      fontSize: number,
-      letterSpacing: number,
-      textColor: string
+  private drawTransparent(
+    rectX: number,
+    rectY: number,
+    rectWidth: number,
+    rectHeight: number,
+    cornerRadius: number
   ) {
-      textSize(fontSize);
-      textAlign(LEFT, CENTER);
-      fill(textColor);
-
-      let currentX = x;
-      for (let i = 0; i < textContent.length; i++) {
-          const char = textContent[i];
-          text(char, currentX, y);
-          currentX += textWidth(char) + letterSpacing;
-      }
+    fill(255, 255, 255, 120); // Semi-transparent white
+    noStroke();
+    rectMode(CENTER);
+    rect(rectX, rectY, rectWidth , rectHeight, cornerRadius);
   }
 
-  private drawButtons(): void {
-      // Calculate button dimensions and positions
-      const buttonContinueX = width / 2 - 180;
-      const buttonContinueY = height / 2 - 60;
-      const buttonContinueWidth = 290;
-      const buttonContinueHeight = 50;
-
-      const buttonExitX = width / 2 - 180;
-      const buttonExitY = height / 2 + 0;
-      const buttonExitWidth = 200;
-      const buttonExitHeight = 50;
-
-      // Check if mouse is over the buttons
-      if (
-          mouseX > buttonContinueX &&
-          mouseX < buttonContinueX + buttonContinueWidth &&
-          mouseY > buttonContinueY &&
-          mouseY < buttonContinueY + buttonContinueHeight
-      ) {
-          if (mouseIsPressed) {
-              console.log("Continue button clicked");
-              // Lägg till logik för "Continue"
-          }
-      }
-
-      if (
-          mouseX > buttonExitX &&
-          mouseX < buttonExitX + buttonExitWidth &&
-          mouseY > buttonExitY &&
-          mouseY < buttonExitY + buttonExitHeight
-      ) {
-          if (mouseIsPressed) {
-              console.log("Exit button clicked");
-              // Lägg till logik för "Exit"
-          }
-      }
-      
-
-      // Draw transparent rectangles for buttons (debugging)
-      noFill();
-      stroke(255, 0, 0); // Debug color for visualizing button areas
-      rect(buttonContinueX, buttonContinueY, buttonContinueWidth, buttonContinueHeight);
-      rect(buttonExitX, buttonExitY, buttonExitWidth, buttonExitHeight);
+  private drawButtons() {
+    this.continueButton.draw();
+    this.exitButton.draw();
   }
 }
-
-/*
-class Button {
-  private x: number;
-  private y: number;
-  private width: number;
-  private height: number;
-  private label: string;
-
-  constructor(x: number, y: number, width: number, height: number, label: string) {
-      this.x = x;
-      this.y = y;
-      this.width = width;
-      this.height = height;
-      this.label = label;
-  }
-
-  public draw(): void {
-      fill(100); // Button color
-      rect(this.x, this.y, this.width, this.height, 10); // Button rectangle with rounded corners
-      fill(255); // Text color
-      textAlign(CENTER, CENTER);
-      text(this.label, this.x + this.width / 2, this.y + this.height / 2);
-  }
-}
-*/

@@ -1,15 +1,16 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
-
-//let music: {
-  //mystery: p5.SoundFile;
-//}; // Global variabel för canvas
-
-// let music: {
-//   mystery: p5.SoundFile;
-// }; // Global variabel för canvas
+let music: {
+  bgMusic: p5.SoundFile;
+};
 let images: {
   player: p5.Image;
+  backgroundImage: p5.Image;
+  arrowImage: p5.Image;  
+  continueImage: p5.Image;
+  exitImage: p5.Image;
+  repeatImage: p5.Image;
+  
 }
 
 
@@ -19,22 +20,19 @@ let images: {
  * sound files, images etc...
  */
 
-
-/*function preload() {
-  //music = {
-    mystery: loadSound("/assets/music/mystery.mp3")
-  }
-}*/
-
-
 function preload() {
-  // music = {
-  //   mystery: loadSound("/assets/music/mystery.mp3")
-  // }
+   music = {
+    bgMusic: loadSound("./assets/music/startMenuSound.mp3")
+  };
 
-  
   images = {
     player: loadImage("/assets/images/bee.png"),
+    backgroundImage: loadImage("/assets/images/background.jpg"),
+    arrowImage: loadImage("/assets/images/arrowkeys.png"),
+    continueImage: loadImage("/assets/images/play-green.png"),
+    exitImage: loadImage("/assets/images/exit.png"),
+    repeatImage: loadImage("/assets/images/repeat.png"),
+
   };
 
 }
@@ -51,13 +49,7 @@ function setup() {
  createCanvas(windowWidth, windowHeight);
   frameRate(60);
 
-  //music.mystery.setVolume(0.8);
-
-
-  // music.mystery.setVolume(0.8);
-
-
-
+  music.bgMusic.setVolume(0.8);
 
   game = new Game();
 }
