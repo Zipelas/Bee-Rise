@@ -1,16 +1,13 @@
+
 //---- GLOBAL VARIABLES ----//
 let game: Game;
-
+let images: {
+   cloud: p5.Image;
+   score: p5.Image;
+}
 //let music: {
   //mystery: p5.SoundFile;
-//}
-let images: {
-  player: p5.Image;
-  bird: p5.Image;
-  ufo: p5.Image;
-  plane: p5.Image;
-  flower: p5.Image;
-}
+//}; // Global variabel för canvas
 
 /**
  * Built in preload function in P5
@@ -18,17 +15,13 @@ let images: {
  * sound files, images etc...
  */
 function preload() {
-  // music = {
+  // //music = {
   //   mystery: loadSound("/assets/music/mystery.mp3")
   // }
-  images = {
-    player: loadImage("/assets/images/bee.png"),
-    bird: loadImage("/assets/images/bird.gif"),
-    ufo: loadImage("/assets/images/ufo.gif"),
-    plane: loadImage("/assets/images/Plane.gif"),
-    flower: loadImage("/assets/images/flower.png")
-  };
-
+images = {
+  cloud: loadImage("assets/images/cloud.png"),
+  score: loadImage("assets/images/sunny.png")
+}
 }
 
 /**
@@ -39,11 +32,12 @@ function preload() {
  */
 
 function setup() {
- createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight);
   frameRate(60);
-
   //music.mystery.setVolume(0.8);
-  game = new Game();
+
+  game = new Game;
+  
 }
 
 /**
@@ -52,13 +46,10 @@ function setup() {
  * you created in the setup function above
  */
 function draw() {
-  game.update();
+ game.update();
   game.draw();
-}
-
+} 
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(windowWidth, windowHeight)
 }
-
-
