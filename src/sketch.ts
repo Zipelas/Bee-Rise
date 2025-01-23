@@ -4,16 +4,12 @@ let images: {
   player: p5.Image;
   flower: p5.Image;
 }
-// let music: {
-//   mystery: p5.SoundFile;
-// }; // Global variabel för canvas
 
 /**
  * Built in preload function in P5
  * This is a good place to load assets such as
  * sound files, images etc...
  */
-
 function preload() {
   // music = {
   //   mystery: loadSound("/assets/music/mystery.mp3")
