@@ -3,6 +3,15 @@ let game: Game;
 let images: {
   player: p5.Image;
   flower: p5.Image;
+  backgroundImage: p5.Image;
+  arrowImage: p5.Image;  
+  continueImage: p5.Image;
+  exitImage: p5.Image;
+  repeatImage: p5.Image;
+}
+  
+  let music: {
+    bgMusic: p5.SoundFile;
 }
 
 /**
@@ -13,9 +22,18 @@ let images: {
 function preload() {
   images = {
     player: loadImage("/assets/images/bee.png"),
-    flower: loadImage("/assets/images/flower.png")
-  };
-
+    flower: loadImage("/assets/images/flower.png"),
+    backgroundImage: loadImage("/assets/images/background.jpg"),
+    arrowImage: loadImage("/assets/images/arrowkeys.png"),
+    continueImage: loadImage("/assets/images/play-green.png"),
+    exitImage: loadImage("/assets/images/exit.png"),
+    repeatImage: loadImage("/assets/images/repeat.png"),
+      
+    };
+    
+    music = {
+     bgMusic: loadSound("./assets/music/startMenuSound.mp3")
+   };
 }
 
 /**
@@ -28,6 +46,8 @@ function preload() {
 function setup() {
  createCanvas(windowWidth, windowHeight);
   frameRate(60);
+
+  music.bgMusic.setVolume(0.8);
 
   game = new Game();
 }
