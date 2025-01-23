@@ -12,6 +12,12 @@ class GameWorld implements Scene {
       this.gameEntities.push(new Flower());
     }
   }
+
+  private createRandomEnemy(): Enemy {
+    const types: ("bird" | "ufo" | "plane")[] = ["bird", "ufo", "plane"];
+    const randomType = random(types); // Slumpa en typ
+    return new Enemy(randomType);
+}
   
   update() {
     for (const gameEntitie of this.gameEntities) {
