@@ -11,9 +11,6 @@ let images: {
  * sound files, images etc...
  */
 function preload() {
-  // music = {
-  //   mystery: loadSound("/assets/music/mystery.mp3")
-  // }
   images = {
     player: loadImage("/assets/images/bee.png"),
     flower: loadImage("/assets/images/flower.png")
@@ -32,7 +29,6 @@ function setup() {
  createCanvas(windowWidth, windowHeight);
   frameRate(60);
 
-  //music.mystery.setVolume(0.8);
   game = new Game();
 }
 
