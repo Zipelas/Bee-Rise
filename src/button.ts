@@ -29,6 +29,7 @@ class Button {
   }
 
   public draw() {
+    noStroke();
     push();
 
     // Draw icon to the left of the button

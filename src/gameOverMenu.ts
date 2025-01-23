@@ -6,8 +6,30 @@ class GameOverMenu implements Scene {
   private exitButton: Button;
 
   constructor() {
-        this.repeatButton = new Button("Repeat", width * 0.5, height * 0.5, 140, 60, "red", "white");
-        this.exitButton = new Button("Exit", width * 0.2, height * 0.8, 140, 60, "#a0a", "white");
+        this.repeatImage = images.repeatImage;
+        this.exitImage = images.exitImage;
+
+        this.repeatButton = new Button(
+          "Repeat",
+          width * 0.4 + 50,
+          height * 0.54,
+          180,
+          60,
+          "#d20007",
+          "black",
+          this.repeatImage
+        );
+    
+        this.exitButton = new Button(
+          "Exit",
+          width * 0.6 + 50,
+          height * 0.54,
+          180,
+          60,
+          "#d20007",
+          "black",
+          this.exitImage
+        );
   }
 
   public update() {
@@ -21,14 +43,34 @@ class GameOverMenu implements Scene {
   }
 
   public draw() {
-    image(this.repeatImage, 0, 0, width, height);
-    image(this.exitImage, 0, 0, width, height);
-    background("#2a9ec7");
-    this.drawGameOverMenu();
+    this.drawTransparent(width * 0.5, height * 0.5, 900, 500, 250);
+
+    this.drawGameOverText();
+
     this.drawButtons();
   }
 
-  private drawGameOverMenu() {}
+  private drawTransparent(
+    rectX: number,
+    rectY: number,
+    rectWidth: number,
+    rectHeight: number,
+    cornerRadius: number
+  ) {
+    fill(255, 255, 255, 120);
+    noStroke();
+    rectMode(CENTER);
+    rect(rectX, rectY, rectWidth , rectHeight, cornerRadius);
+  }
+  private drawGameOverText() {
+    textFont("Modak");
+    textSize(72);
+    fill("#d20007");
+    stroke(0);
+    strokeWeight(8);
+    textAlign(CENTER, CENTER);
+    text("Game Over", width / 2, height * 0.35);
+  }
 
   private drawButtons() {
     this.repeatButton.draw();
