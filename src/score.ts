@@ -1,5 +1,5 @@
 class Score {
-    private color: string; // Text color
+    private color: string; 
     private currentHighScore: number;
     private currentScore: number;
     private position: p5.Vector;
