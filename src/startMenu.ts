@@ -1,3 +1,4 @@
+
 class StartMenu implements Scene {
   private bgImage: p5.Image;
   private arrowImage: p5.Image;
@@ -101,4 +102,8 @@ class StartMenu implements Scene {
     // Draw instructions
     this.drawInstructions();
   }
+
+class StartMenu extends Button{
+  
+
 }

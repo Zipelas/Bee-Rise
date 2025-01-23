@@ -1,3 +1,4 @@
+
 class PauseMenu implements Scene {
   private continueImage: p5.Image;
   private exitImage: p5.Image;
@@ -66,3 +67,6 @@ class PauseMenu implements Scene {
     this.exitButton.draw();
   }
 }
+
+class PauseMenu {}
+

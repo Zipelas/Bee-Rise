@@ -1,3 +1,1 @@
-class Flower extends Entity {  
 
-  }

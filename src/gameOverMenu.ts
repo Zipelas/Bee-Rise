@@ -1,3 +1,4 @@
+
 /// <reference path="scene.ts" />
 class GameOverMenu implements Scene {
   private repeatImage: p5.Image;
@@ -77,3 +78,6 @@ class GameOverMenu implements Scene {
     this.exitButton.draw();
   }
 }
+
+class GameOverMenu {}
+

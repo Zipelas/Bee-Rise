@@ -1,4 +1,5 @@
 class Button {
+
   private title: string;
   private backgroundColor: string;
   private width: number;
@@ -61,3 +62,7 @@ class Button {
     return this.isMouseOver() && mouseIsPressed;
   }
 }
+
+    
+        }
+
