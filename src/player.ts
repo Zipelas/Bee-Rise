@@ -4,7 +4,7 @@
 class Player extends Entity {
   private jumpStrength: number = 7;
   private gravity: number = 0.2;
-  private groundLevel: number; 
+  private groundLevel: number;
 
    constructor() {
     super(width * 0.5, height - 120, 100, 120, 0, 0, images.player);
@@ -31,5 +31,9 @@ class Player extends Entity {
       this.velocity.y = -this.jumpStrength;
     }
 
+   }
+
+   public jump() {
+    this.velocity.y = -this.jumpStrength;
    }
 }

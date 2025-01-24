@@ -18,7 +18,26 @@ class GameWorld implements Scene {
       gameEntitie.update();
     }
   }
-  
+
+  private checkCollision() {
+    for (const gameEntitie of this.gameEntities) {
+      if (gameEntitie instanceof Player) {
+        for (const otherEntity of this.gameEntities) {
+         if (otherEntity instanceof Player) continue;
+
+          if (this.entitiesCollides(gameEntitie, otherEntity)) {
+            if(otherEntity instanceof Flower) {
+              //Applicera reaktion
+            }
+          }
+        }
+      }
+    }
+  }
+  private entitiesCollides(o1: Entity, o2: Entity) {
+    return true;
+  }
+
   draw() {
     background("#2a9ec7");
     for (const gameEntitie of this.gameEntities) {
