@@ -1,8 +1,8 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
 let images: {
-  player: p5.Image;
   flower: p5.Image;
+  player: p5.Image;
   backgroundImage: p5.Image;
   arrowImage: p5.Image;  
   continueImage: p5.Image;
@@ -21,8 +21,8 @@ let images: {
  */
 function preload() {
   images = {
-    player: loadImage("/assets/images/bee.png"),
     flower: loadImage("/assets/images/flower.png"),
+    player: loadImage("/assets/images/bee.png"),
     backgroundImage: loadImage("/assets/images/background.jpg"),
     arrowImage: loadImage("/assets/images/arrowkeys.png"),
     continueImage: loadImage("/assets/images/play-green.png"),

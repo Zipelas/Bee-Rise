@@ -1,7 +1,6 @@
 
 /// <reference path="entity.ts" />
 
-
 class Player extends Entity {
   private jumpStrength: number = 7;
   private gravity: number = 0.2;
@@ -32,5 +31,5 @@ class Player extends Entity {
       this.velocity.y = -this.jumpStrength;
     }
 
-}
+   }
 }
