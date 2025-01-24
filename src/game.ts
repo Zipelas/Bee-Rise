@@ -6,10 +6,10 @@ class Game {
 
 
   constructor() {
-    this.startMenu = new StartMenu();
+    this.startMenu = new StartMenu(() => this.changeScene("game"));
     this.gameOverMenu = new GameOverMenu();
     this. gameWorld = new GameWorld();
-    this.activeScene = new GameWorld();
+    this.activeScene = "start";
   }
 
   
@@ -21,7 +21,6 @@ class Game {
     } else if (this.activeScene === "game") {
       this.gameWorld.update();
     }
-    this.activeScene.update();
   }
   
   public draw() {
@@ -32,7 +31,6 @@ class Game {
     } else if (this.activeScene === "game") {
       this.gameWorld.draw();
     }
-    this.activeScene.draw();
   }
   
   public changeScene(nextScene: "start" | "gameover" | "game") {
