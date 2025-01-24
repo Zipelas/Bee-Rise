@@ -1,12 +1,15 @@
 class Button {
   private title: string;
-  private backgroundColor: string;
-  private width: number;
-  private height: number;
-  private textColor: string;
   private x: number;
   private y: number;
-  private image: p5.Image;
+  private width: number;
+  private height: number;
+  private backgroundColor: string;
+  private textColor: string;
+  private font: string;
+  private cornerRadius?: number;
+  private textSize: number;
+  private image?: p5.Image;
 
   constructor(
     title: string,
@@ -16,13 +19,20 @@ class Button {
     height: number,
     backgroundColor: string,
     textColor: string,
-    image: p5.Image
-  ) {
+    font: string,
+    image?: p5.Image,
+    cornerRadius?: number,
+    textSize: number,
+)
+{
     this.title = title;
     this.backgroundColor = backgroundColor;
     this.width = width;
     this.height = height;
     this.textColor = textColor;
+    this.font = font;
+    this.textSize = textSize;
+    this.cornerRadius = cornerRadius;
     this.image = image;
     this.x = x;
     this.y = y;
@@ -31,15 +41,25 @@ class Button {
   public draw() {
     push();
 
-    // Draw icon to the left of the button
-    imageMode(CENTER);
-    image(this.image, this.x - 100, this.y, 40, 40); // Adjust position for the icon
+    // Rita rektangeln med rundade hörn
+    stroke("black");
+    strokeWeight(5);
+    fill(this.backgroundColor);
+    rectMode(CENTER);
+    rect(this.x, this.y, this.width, this.height, this.cornerRadius);
 
-    // Draw text next to the icon
-    textAlign(LEFT, CENTER);
+    // Rita eventuell bild (om en är angiven)
+    if (this.image) {
+      imageMode(CENTER);
+      image(this.image, this.x - this.width / 2 + 20, this.y, 40, 40);
+    }
+
+    // Rita knappens text med rätt typsnitt
+    textAlign(CENTER, CENTER);
+    textSize(this.textSize);
+    textFont(this.font); // Sätt typsnittet här
     fill(this.textColor);
-    textFont("Alfa Slab One", 24);
-    text(this.title, this.x - 50, this.y); // Adjust text placement to align with the icon
+    text(this.title, this.x, this.y);
 
     pop();
   }
@@ -56,7 +76,7 @@ class Button {
     );
   }
 
-  public isClicked() {
+  public isClicked(): boolean {
     return this.isMouseOver() && mouseIsPressed;
   }
 }
