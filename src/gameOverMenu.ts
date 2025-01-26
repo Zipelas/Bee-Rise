@@ -79,5 +79,5 @@ class GameOverMenu implements Scene {
   }
 }
 
-class GameOverMenu {}
+
 

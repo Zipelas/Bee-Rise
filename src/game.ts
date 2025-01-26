@@ -3,7 +3,7 @@ class Game {
   private activeScene: Scene;
 
   constructor() {
-    this.activeScene = new GameWorld(); 
+    this.activeScene = new GameOverMenu(); 
   }
 
   public changeScene(nextScene: Scene) {

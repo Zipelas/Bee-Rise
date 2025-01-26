@@ -68,5 +68,5 @@ class PauseMenu implements Scene {
   }
 }
 
-class PauseMenu {}
+
 
