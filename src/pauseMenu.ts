@@ -67,6 +67,3 @@ class PauseMenu implements Scene {
     this.exitButton.draw();
   }
 }
-
-class PauseMenu {}
-

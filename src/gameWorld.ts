@@ -1,9 +1,10 @@
 class GameWorld implements Scene {
-  protected gameEntities: Entity[] = []; // Array for game entities
+  protected gameEntities: Entity[]; // Array for game entities
   private cloudImage: p5.Image;
   private score: Score; // Score instance
 
   constructor() {
+    this.gameEntities = [];
     this.cloudImage = images.cloud; // Load the cloud image
 
     // Initialize the score system

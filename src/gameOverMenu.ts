@@ -78,6 +78,3 @@ class GameOverMenu implements Scene {
     this.exitButton.draw();
   }
 }
-
-class GameOverMenu {}
-
