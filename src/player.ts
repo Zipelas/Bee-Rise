@@ -1,11 +1,7 @@
-
-
-
 /// <reference path="entity.ts" />
 
 class Player extends Entity {
-  private jumpStrength: number = 5;
-
+  private jumpStrength: number = 8;
   private gravity: number = 0.2;
   private groundLevel: number;
 
@@ -33,13 +29,8 @@ class Player extends Entity {
     this.position.y = this.groundLevel;
     this.velocity.y = -this.jumpStrength;
   }
+}
 
-  // if (this.position.y >= this.groundLevel && this.velocity.y <= 0) {
-  //   this.position.y = this.groundLevel;
-  //   this.velocity.y = -this.jumpStrength;
-  // }
-
-   }
    public jump() {
     this.velocity.y = -this.jumpStrength;
    }
