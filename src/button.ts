@@ -1,4 +1,5 @@
 class Button {
+
   private title: string;
   private x: number;
   private y: number;
@@ -39,6 +40,7 @@ class Button {
   }
 
   public draw() {
+    noStroke();
     push();
 
     // Rita rektangeln med rundade hörn
@@ -80,3 +82,4 @@ class Button {
     return this.isMouseOver() && mouseIsPressed;
   }
 }
+

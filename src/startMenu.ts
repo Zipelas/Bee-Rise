@@ -1,3 +1,4 @@
+
 class StartMenu implements Scene {
   private bgImage: p5.Image;
   private arrowImage: p5.Image;
