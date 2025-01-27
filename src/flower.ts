@@ -10,7 +10,6 @@ class Flower extends Entity {
       0,
       images.flower
     );
-    // this.gap = gap
   }
 
   public draw() {
