@@ -1,4 +1,3 @@
-
 /// <reference path="scene.ts" />
 class GameOverMenu implements Scene {
   private repeatImage: p5.Image;
@@ -7,43 +6,42 @@ class GameOverMenu implements Scene {
   private exitButton: Button;
 
   constructor() {
-        this.repeatImage = images.repeatImage;
-        this.exitImage = images.exitImage;
+    this.repeatImage = images.repeatImage;
+    this.exitImage = images.exitImage;
 
-        this.repeatButton = new Button(
-          "Repeat",
-          width * 0.4 + 50,
-          height * 0.54,
-          180,
-          60,
-          "#d20007",
-          "black",
-          "Alfa Slab One",
-          this.repeatImage,
-          0, // Add the missing arguments
-          0,
-        );
-    
-        this.exitButton = new Button(
-          "Exit",
-          width * 0.6 + 50,
-          height * 0.54,
-          180,
-          60,
-          "#d20007",
-          "black",
-          "Alfa Slab One",
-          this.exitImage,
-          0,
-          40
+    this.repeatButton = new Button(
+      "Repeat",
+      width * 0.4 + 50,
+      height * 0.54,
+      180,
+      60,
+      "#d20007",
+      "black",
+      "Alfa Slab One",
+      this.repeatImage,
+      0, // Add the missing arguments
+      0
+    );
 
-        );
+    this.exitButton = new Button(
+      "Exit",
+      width * 0.6 + 50,
+      height * 0.54,
+      180,
+      60,
+      "#d20007",
+      "black",
+      "Alfa Slab One",
+      this.exitImage,
+      0,
+      40
+    );
   }
 
   public update() {
     if (this.repeatButton.isClicked()) {
       // byt scene A
-      game.changeScene("game")
+      game.changeScene("game");
     }
     if (this.exitButton.isClicked()) {
       // byt scene B
@@ -68,7 +66,7 @@ class GameOverMenu implements Scene {
     fill(255, 255, 255, 120);
     noStroke();
     rectMode(CENTER);
-    rect(rectX, rectY, rectWidth , rectHeight, cornerRadius);
+    rect(rectX, rectY, rectWidth, rectHeight, cornerRadius);
   }
   private drawGameOverText() {
     textFont("Modak");
@@ -85,6 +83,3 @@ class GameOverMenu implements Scene {
     this.exitButton.draw();
   }
 }
-
-
-
