@@ -49,9 +49,9 @@ class GameOverMenu implements Scene {
   }
 
   public update() {
-    if (this.repeatButton.isClicked()) {
-      game.changeScene("game");
-    }
+    // if (this.repeatButton.isClicked()) {
+    //   game.changeScene("game");
+    // }
     if (this.exitButton.isClicked()) {
       game.changeScene("start");
     }

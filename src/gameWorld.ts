@@ -1,5 +1,5 @@
 class GameWorld implements Scene {
-  protected gameEntities: Entity[]; // Array for game entities
+  protected gameEntities: Entity[];
   private cloudImage: p5.Image;
   private score: Score; // Score instance
 
