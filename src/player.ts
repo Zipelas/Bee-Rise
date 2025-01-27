@@ -26,10 +26,15 @@ class Player extends Entity {
     this.velocity.y += this.gravity;
     this.position.y += this.velocity.y;
 
-    if (this.position.y >= this.groundLevel) {
-      this.position.y = this.groundLevel;
-      this.velocity.y = -this.jumpStrength;
-    }
+  if (this.position.y >= this.groundLevel) {
+    this.position.y = this.groundLevel;
+    this.velocity.y = -this.jumpStrength;
+  }
+
+  // if (this.position.y >= this.groundLevel && this.velocity.y <= 0) {
+  //   this.position.y = this.groundLevel;
+  //   this.velocity.y = -this.jumpStrength;
+  // }
 
    }
 
