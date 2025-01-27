@@ -1,9 +1,7 @@
 class GameWorld implements Scene {
-
-
+  
   protected gameEntities: Entity[]; // Array for game entities
   private cloudImage: p5.Image;
-
   private score: Score; // Score instance
 
   constructor() {
@@ -16,47 +14,15 @@ class GameWorld implements Scene {
 
 
     this.initializeClouds(); // Initialize clouds
-    this.initializeEntities(); 
-    this.addFlowers();// Initialize player and flowers
-  }
-
-  private addFlowers() {
-    const numberOfFlowers = floor(random(5, 7));
-    for (let i = 0; i < numberOfFlowers; i++) {
-      this.gameEntities.push(new Flower());
-    }
+    this.initializeFlowers(); 
+    // Initialize player and flowers
   }
   
   private createRandomEnemy(): Enemy {
     const types: ("bird" | "ufo" | "plane")[] = ["bird", "ufo", "plane"];
     const randomType = random(types); // Slumpa en typ
     return new Enemy(randomType);
-}
-
-  /*private checkCollision() {
-    for (const gameEntitie of this.gameEntities) {
-      if (gameEntitie instanceof Player) {
-        for (const otherEntitie of this.gameEntities) {
-          if (otherEntitie instanceof Player) continue;
-          
-          if (this.entitiesCollides(gameEntitie, otherEntitie)) {
-            if(otherEntitie instanceof Flower) {
-              gameEntitie.jump()
-            }
-          }
-        }
-      }
-    }
-  }
-  private entitiesCollides(o1: Entity, o2: Entity): boolean {
-    return (
-      o1.position.x < o2.position.x + o2.size.x &&
-      o1.position.x + o1.size.x > o2.position.x &&
-      o1.position.y < o2.position.y + o2.size.y &&
-      o1.position.y + o1.size.y > o2.position.y
-    );
-  }*/
-  
+} 
   
   
   private initializeClouds() {
@@ -100,15 +66,16 @@ class GameWorld implements Scene {
 }
 
 
-  private initializeEntities() {
+  private initializeFlowers() {
     // Define the positions for the flowers to create a cross pattern
-    const flowerPositions = [
-      createVector(width * 0.5, height * 0.3), // Top of the cross
-      createVector(width * 0.5, height * 0.7), // Bottom of the cross
-      createVector(width * 0.3, height * 0.5), // Left of the cross
-      createVector(width * 0.7, height * 0.5), // Right of the cross
-      createVector(width * 0.5, height * 0.5), // Center of the cross
-    ];
+    const flowerPositions = [];
+
+  // Generera 5 blommor med horisontell position mellan 30% och 70%
+  for (let i = 0; i < 5; i++) {
+    const x = random(width * 0.3, width * 0.7); // Mellan 30% och 70% av bredden
+    const y = random(0, height); // Hela höjden av skärmen
+    flowerPositions.push(createVector(x, y));
+  }
   
     // Create flowers at the defined positions
     for (const pos of flowerPositions) {
@@ -116,10 +83,6 @@ class GameWorld implements Scene {
       flower.position = pos; // Set flower position to the defined spot
       this.gameEntities.push(flower);
     }
-  
-    // Add the player to the game (last in the array)
-    const player = new Player();
-    this.gameEntities.push(player);
   }
 
   // Check collisions between the player and other entities
@@ -138,6 +101,7 @@ class GameWorld implements Scene {
       }
     }
   }
+
   private entitiesCollide(o1: Entity, o2: Entity): boolean {
     if (o2 instanceof Flower) {
       // Define the center (yellow part) of the flower
