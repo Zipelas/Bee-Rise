@@ -1,242 +1,88 @@
 class StartMenu implements Scene {
-  private backgroundImage: p5.Image;
+  private bgImage: p5.Image;
   private arrowImage: p5.Image;
-  private startButton: p5.Element;
+  private title: string;
+  // private playButtonHovered: boolean = false;
+  private playButton: Button;
+  private changeSceneCallback: () => void;
 
-  constructor() {
-    this.backgroundImage = loadImage("./assets/music/background.jpg");
-    this.arrowImage = loadImage("./assets/music/arrowkeys.png");
+  constructor(changeSceneCallback: () => void) {
+    this.bgImage = images.backgroundImage;
+    this.arrowImage = images.arrowImage;
+    this.title = "BEE RISE";
+    this.changeSceneCallback = changeSceneCallback;
 
-    // Button
-    this.startButton = createButton("Play");
-    this.startButton.style("background-color", "#d20007");
-    this.startButton.style("color", "white");
-    this.startButton.style("font-size", "20px");
-    this.startButton.style("font-family", "'Alfa Slab One'");
-    this.startButton.style("padding", "10px 50px");
-    this.startButton.style("border", "2px solid black");
-    this.startButton.style("border-radius", "40px");
-    this.startButton.style("cursor", "pointer");
-    this.startButton.style("letter-spacing", "1px");
-    this.startButton.mousePressed(() => this.startGame());
-
-    // Lägg till pulsanimationen
-    this.startButton.style("animation", "pulse 1.5s infinite");
-
-    // Lägg till hover-effekt
-    this.startButton.mouseOver(() => {
-      this.startButton.style("background-color", "#f70a0f");
-    });
-    this.startButton.mouseOut(() => {
-      this.startButton.style("background-color", "#d20007");
-    });
-
-    // Lägg till pulsanimation till dokumentets `<style>`
-    const style = document.createElement("style");
-    style.textContent = `
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.1);
-        }
-        100% {
-          transform: scale(1);
-        }
-      }
-    `;
-    document.head.appendChild(style);
+    this.playButton = new Button(
+      "Play",
+      width * 0.5,
+      height * 0.5,
+      200,
+      80,
+      "#d20007", 
+      "#fff",
+      "Alfa Slab One",
+      undefined,
+      30,
+      40
+    );
   }
 
-  public update() {
-    // Uppdateringslogik om det behövs
-  }
-
-  public draw() {
-    image(this.backgroundImage, 0, 0, width, height);
-
-   
-    this.startButton.position(windowWidth / 2 - 100, windowHeight / 2 - 90);
-
+  private drawTitle() {
+    push()
+    textFont("Bee Rise");
+    textAlign(CENTER, CENTER);
+    textSize(150);
+    fill("#ffca00");
     textFont("Modak");
     stroke(0);
     strokeWeight(8);
-    this.drawTextWithLetterSpacing(
-      "Bee Rise",
-      width / 2 - 345,
-      height / 4,
-      150,
-      10,
-      "#ffca00"
-    );
-
-    this.drawInstructions();
+    text(this.title, width / 2, height / 4);
+    pop()
   }
 
   private drawInstructions() {
-    const backgroundX = width / 2 - 255;
-    const backgroundY = height / 2 + 10;
-    const backgroundWidth = 470;
-    const backgroundHeight = 250;
-    const cornerRadius = 150;
-
-    fill(255, 255, 255, 127);
+    const rectX = width * 0.5;
+    const rectY = height * 0.8;
+    const rectWidth = 600;
+    const rectHeight = 250;
+    const cornerRadius = 20;
+    
+    push()
+    // Draw transparent background
+    fill(255, 255, 255, 120); // Semi-transparent white
     noStroke();
-    rect(
-      backgroundX,
-      backgroundY,
-      backgroundWidth,
-      backgroundHeight,
-      cornerRadius
-    );
+    rectMode(CENTER);
+    rect(rectX, rectY, rectWidth, rectHeight, cornerRadius);
 
+    // Draw "Instruction" text
     textFont("Alfa Slab One");
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    fill("#000");
+    text("Instruction", rectX, rectY - 70);
 
-    this.drawTextWithLetterSpacing(
-      "Instruction",
-      width / 2 - 125,
-      backgroundY + 40,
-      32,
-      1,
-      "#000"
-    );
+    // Draw arrow keys
+    const arrowKeySize = 50;
+    const arrowKeyX = rectX;
+    const arrowKeyY = rectY + 10;
+    image(this.arrowImage, arrowKeyX - arrowKeySize / 2, arrowKeyY - 20, 60, 60);
 
-    // Arrowkeys
-    const imageWidth = 180;
-    const imageHeight = 175;
-    const imageX = width / 2 - 25 - imageWidth / 2;
-    const imageY = backgroundY + 60;
-    image(this.arrowImage, imageX, imageY, imageWidth, imageHeight);
-
-    this.drawTextWithLetterSpacing(
-      "Go left",
-      imageX - 90,
-      imageY + 130,
-      16,
-      1,
-      "#000"
-    );
-
-    this.drawTextWithLetterSpacing(
-      "Go right",
-      imageX + imageWidth + 20,
-      imageY + 130,
-      16,
-      1,
-      "#000"
-    );
+    textSize(18);
+    text("Go left", rectX - 120, rectY + 50);
+    text("Go right", rectX + 120, rectY + 50);
+    pop()
   }
 
-  private drawTextWithLetterSpacing(
-    textContent: string,
-    x: number,
-    y: number,
-    fontSize: number,
-    letterSpacing: number,
-    textColor: string
-  ) {
-    textSize(fontSize);
-    textAlign(LEFT, CENTER);
-    fill(textColor);
-
-    let currentX = x;
-    for (let i = 0; i < textContent.length; i++) {
-      const char = textContent[i];
-      text(char, currentX, y);
-      currentX += textWidth(char) + letterSpacing;
+  public update(): void {
+    if (this.playButton.isClicked()) {
+      this.changeSceneCallback();
     }
   }
 
-  private startGame() {
-    console.log("Game is starting...");
-    this.startButton.hide(); // Dölj knappen när spelet startar
-    // Logik för att byta till spelets huvudsakliga scen
-  }
-
-  public windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
+  public draw(): void {
+    image(this.bgImage, 0, 0, width, height);
+    this.drawTitle();
+    this.playButton.draw();
+    this.drawInstructions();
   }
 }
-
-// let bgMusic;
-// let startMenu;
-// let playPauseButton;
-// let volumeSlider;
-
-// function preload() {
-//   // Load assets
-//   bgMusic = loadSound('./assets/music/startMenuSound.mp3');
-// }
-
-// function setup() {
-//   createCanvas(windowWidth, windowHeight);
-
-//   // Start background music
-//   bgMusic.loop(); // Loop the music
-//   bgMusic.setVolume(0.5); // Set volume to 50%
-
-//   // Create the StartMenu
-//   startMenu = new StartMenu();
-
-//   // Create Play/Pause Button
-//   playPauseButton = createButton('Pause Music');
-//   playPauseButton.style('font-size', '13px');
-//   playPauseButton.style('padding', '5px 15px');
-//   playPauseButton.style('background-color', '#d20007'); 
-//   playPauseButton.style("font-family", "'Alfa Slab One'");// Set background color
-//   playPauseButton.style('color', '#FFFFFF'); // Set text color
-//   playPauseButton.style("border", "2px solid black");
-//   playPauseButton.style('border-radius', '40px');
-//   playPauseButton.style('letter-spacing', '1px');
-//   playPauseButton.mousePressed(togglePlayPause);
-
-//   // Add hover effects
-//   playPauseButton.mouseOver(() => playPauseButton.style('background-color', '#f70a0f'));
-//   playPauseButton.mouseOut(() => playPauseButton.style('background-color', '#d20007'));
-
-//   // Create Volume Slider
-//   volumeSlider = createSlider(0, 1, 0.5, 0.01); // Range 0 to 1, default 0.5, step 0.01
-//   volumeSlider.style('width', '120px');
-
-//   // Dynamically position UI elements relative to the canvas
-//   positionControls();
-// }
-
-// function draw() {
-//   // Delegate drawing to the StartMenu
-//   startMenu.draw();
-
-//   // Update the volume based on the slider
-//   bgMusic.setVolume(volumeSlider.value());
-// }   
-
-// function windowResized() {
-//   resizeCanvas(windowWidth, windowHeight);
-//   startMenu.windowResized();
-
-//   // Reposition controls when the window is resized
-//   positionControls();
-// }
-
-// // Function to dynamically position controls
-// function positionControls() {
-//   const padding = 20;
-
-//   // Position Play/Pause Button in the top-right corner relative to the canvas
-//   playPauseButton.position(width - 120 - padding, padding);
-
-//   // Position Volume Slider below the Play/Pause Button
-//   volumeSlider.position(width - 120 - padding, playPauseButton.y + 40);
-// }
-
-// // Toggle Play/Pause Function
-// function togglePlayPause() {
-//   if (bgMusic.isPlaying()) {
-//     bgMusic.pause();
-//     playPauseButton.html('Play Music'); // Update button text
-//   } else {
-//     bgMusic.play();
-//     playPauseButton.html('Pause Music'); // Update button text
-//   }
-// }

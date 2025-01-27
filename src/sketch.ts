@@ -10,6 +10,15 @@ let images: {
   ufo: p5.Image;
   plane: p5.Image;
   flower: p5.Image;
+  backgroundImage: p5.Image;
+  arrowImage: p5.Image;  
+  continueImage: p5.Image;
+  exitImage: p5.Image;
+  repeatImage: p5.Image;
+}
+  
+  let music: {
+    bgMusic: p5.SoundFile;
 }
 
 /**
@@ -18,17 +27,23 @@ let images: {
  * sound files, images etc...
  */
 function preload() {
-  // music = {
-  //   mystery: loadSound("/assets/music/mystery.mp3")
-  // }
   images = {
+    flower: loadImage("/assets/images/flower.png"),
     player: loadImage("/assets/images/bee.png"),
     bird: loadImage("/assets/images/bird.gif"),
     ufo: loadImage("/assets/images/ufo.gif"),
     plane: loadImage("/assets/images/Plane.gif"),
-    flower: loadImage("/assets/images/flower.png")
-  };
-
+    backgroundImage: loadImage("/assets/images/background.jpg"),
+    arrowImage: loadImage("/assets/images/arrowkeys.png"),
+    continueImage: loadImage("/assets/images/play-green.png"),
+    exitImage: loadImage("/assets/images/exit.png"),
+    repeatImage: loadImage("/assets/images/repeat.png"),
+      
+    };
+    
+    music = {
+     bgMusic: loadSound("./assets/music/startMenuSound.mp3")
+   };
 }
 
 /**
@@ -42,7 +57,8 @@ function setup() {
  createCanvas(windowWidth, windowHeight);
   frameRate(60);
 
-  //music.mystery.setVolume(0.8);
+  music.bgMusic.setVolume(0.8);
+
   game = new Game();
 }
 
