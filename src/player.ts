@@ -29,7 +29,7 @@ class Player extends Entity {
     this.velocity.y += this.gravity;
     this.position.y += this.velocity.y;
 
-  if (this.position.y >= this.groundLevel) {
+  if (this.position.y >= this.groundLevel && this.velocity.y <= 0) {
     this.position.y = this.groundLevel;
     this.velocity.y = -this.jumpStrength;
   }
@@ -40,7 +40,6 @@ class Player extends Entity {
   // }
 
    }
-
    public jump() {
     this.velocity.y = -this.jumpStrength;
    }

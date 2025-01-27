@@ -8,7 +8,7 @@ class Game {
   constructor() {
     this.startMenu = new StartMenu(() => this.changeScene("game"));
     this.gameOverMenu = new GameOverMenu();
-    this. gameWorld = new GameWorld();
+    this. gameWorld = new GameWorld(() => this.changeScene("gameover"));
     this.activeScene = "start";
   }
 

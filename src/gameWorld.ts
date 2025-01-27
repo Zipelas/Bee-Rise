@@ -15,6 +15,7 @@ class GameWorld implements Scene {
 
     this.initializeClouds(); // Initialize clouds
     this.initializeFlowers(); 
+    this.generateBottomPlatform()
     // Initialize player and flowers
   }
   
@@ -83,6 +84,15 @@ class GameWorld implements Scene {
       flower.position = pos; // Set flower position to the defined spot
       this.gameEntities.push(flower);
     }
+  }
+
+  private generateBottomPlatform() {
+    const y = height - 50;
+    const x = width / 2;
+
+    const bottomFlower = new Flower();
+    bottomFlower.position = createVector(x, y);
+    this.gameEntities.push(bottomFlower);
   }
 
   // Check collisions between the player and other entities

@@ -54,7 +54,6 @@ class GameOverMenu implements Scene {
     this.drawTransparent(width * 0.5, height * 0.5, 900, 500, 250);
 
     this.drawGameOverText();
-
     this.drawButtons();
   }
 
