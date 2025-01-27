@@ -103,7 +103,7 @@ class StartMenu implements Scene {
     this.drawInstructions();
   }
 
-class StartMenu extends Button{
+
   
 
 }
