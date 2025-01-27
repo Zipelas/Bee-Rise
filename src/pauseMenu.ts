@@ -17,7 +17,10 @@ class PauseMenu implements Scene {
       60,
       "#d20007",
       "black",
-      this.continueImage
+      "Alfa Slab One",
+      this.continueImage,
+      0,
+      0
     );
 
     this.exitButton = new Button(
@@ -28,7 +31,10 @@ class PauseMenu implements Scene {
       60,
       "#d20007",
       "black",
-      this.exitImage
+      "Alfa Slab One",
+      this.exitImage,
+      0,
+      40
     );
   }
 
