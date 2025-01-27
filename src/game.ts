@@ -1,4 +1,3 @@
-/// <reference path="gameWorld.ts" />
 class Game {
   private startMenu: StartMenu;
   private gameOverMenu: GameOverMenu;
@@ -23,7 +22,7 @@ class Game {
       this.gameWorld.update();
     }
   }
-
+  
   public draw() {
     if (this.activeScene === "start") {
       this.startMenu.draw();
@@ -32,7 +31,10 @@ class Game {
     } else if (this.activeScene === "game") {
       this.gameWorld.draw();
     }
+
   }
+  
+ 
   
   public changeScene(nextScene: "start" | "gameover" | "game") {
     this.activeScene = nextScene;
