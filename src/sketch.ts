@@ -4,6 +4,7 @@ let game: Game;
 
 
 let images: {
+  flower: p5.Image;
   player: p5.Image;
   backgroundImage: p5.Image;
   arrowImage: p5.Image;  
@@ -31,6 +32,7 @@ function preload() {
  
 
   images = {
+    flower: loadImage("/assets/images/flower1.png"),
     player: loadImage("/assets/images/bee.png"),
     backgroundImage: loadImage("/assets/images/background.jpg"),
     arrowImage: loadImage("/assets/images/arrowkeys.png"),
@@ -59,10 +61,6 @@ function setup() {
  
 
   game = new Game();
-
-  //music.mystery.setVolume(0.8);
-
-  game = new Game;
 
 }
 

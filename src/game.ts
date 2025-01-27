@@ -1,20 +1,51 @@
 /// <reference path="gameWorld.ts" />
 class Game {
-  private activeScene: Scene;
+  private startMenu: StartMenu;
+  private gameOverMenu: GameOverMenu;
+  private gameWorld: GameWorld;
+  private activeScene: "start" | "gameover" | "game";
+
 
   constructor() {
-    this.activeScene = new GameWorld(); 
+    this.startMenu = new StartMenu(() => this.changeScene("game"));
+    this.gameOverMenu = new GameOverMenu();
+    this. gameWorld = new GameWorld();
+    this.activeScene = "start";
   }
 
-  public changeScene(nextScene: Scene) {
-    this.activeScene = nextScene;
-  }
-
+  
   public update() {
-    this.activeScene.update();
+    if (this.activeScene === "start") {
+      this.startMenu.update();
+    } else if (this.activeScene === "gameover") {
+      this.gameOverMenu.update();
+    } else if (this.activeScene === "game") {
+      this.gameWorld.update();
+    }
   }
 
   public draw() {
-    this.activeScene.draw();
+    if (this.activeScene === "start") {
+      this.startMenu.draw();
+    } else if (this.activeScene === "gameover") {
+      this.gameOverMenu.draw();
+    } else if (this.activeScene === "game") {
+      this.gameWorld.draw();
+    }
+  }
+  
+  public changeScene(nextScene: "start" | "gameover" | "game") {
+    this.activeScene = nextScene;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
