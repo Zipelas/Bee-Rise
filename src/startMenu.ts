@@ -16,7 +16,7 @@ class StartMenu implements Scene {
       width * 0.5,
       height * 0.5,
       200,
-      80,
+      85,
       "#d20007",
       "#fff",
       "Alfa Slab One",
