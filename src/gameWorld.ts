@@ -16,17 +16,11 @@ class GameWorld implements Scene {
 
 
     this.initializeClouds(); // Initialize clouds
-    this.initializeEntities(); // Initialize player and flowers
+    this.initializeEntities(); 
+    this.addFlowers();// Initialize player and flowers
   }
 
-  // Initialize clouds with non-overlapping positions
-  private initializeClouds() {
-    const cloudPositions: { x: number; y: number }[] = []; // Track cloud positions
-
-
-    this.initializeClouds();
-    this.addFlowers(); 
-  }
+ 
 
   private addFlowers() {
     const numberOfFlowers = floor(random(5, 7));
@@ -94,16 +88,14 @@ class GameWorld implements Scene {
           cloudPositions.push({ x, y }); // Store valid position
         }
       }
-
-
-
-      
       // Create a static cloud
 
       const cloud = new Moln(x, y, width, height, 0, this.cloudImage);
       this.gameEntities.push(cloud); // Add cloud to game entities
     }
   }
+}
+
 
   private initializeEntities() {
     // Define the positions for the flowers to create a cross pattern
@@ -167,56 +159,35 @@ class GameWorld implements Scene {
     );
   }
 
-  // Update all game entities and check collisions
-  public update(): void {
-    for (const entity of this.gameEntities) {
-      entity.update();
-    }
-    this.checkCollision();
-  }
 
- // Draw all game entities and the score
-public draw(): void {
-  background("#2a9ec7"); // Set the background color
-
-  // Draw non-player entities first
-  for (const entity of this.gameEntities) {
-    if (!(entity instanceof Player)) {
-      entity.draw();
-    }
-  }
-
-  // Draw the player last to ensure it appears in front
-  for (const entity of this.gameEntities) {
-    if (entity instanceof Player) {
-      entity.draw();
-    }
-  }
-
-  // Draw the score
-  this.score.draw();
-}
-}
-
-  
-  
-    
   public update() {
     for (const gameEntitie of this.gameEntities) {
-      gameEntitie.update();
-    }
-    this.checkCollision();
-  }
-   
-    public draw(): void {
-      background("#2a9ec7"); 
-      
-      for (const gameEntitie of this.gameEntities) {
-        gameEntitie.draw();
-        
-        this.score.draw();
+        gameEntitie.update();
       }
-    }; 
-  
-  }
+      this.checkCollision();
+    }
+     
+      public draw(): void {
+        background("#2a9ec7"); 
+        
+        for (const entity of this.gameEntities) {
+              if (!(entity instanceof Player)) {
+                entity.draw();
+              }
+            }
+            
+            // Draw the player last to ensure it appears in front
+            for (const entity of this.gameEntities) {
+              if (entity instanceof Player) {
+                entity.draw();
+              }
+            }
+          
+          this.score.draw();
+        
+      } 
+}
+
+
+
   

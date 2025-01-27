@@ -10,9 +10,8 @@ let images: {
   continueImage: p5.Image;
   exitImage: p5.Image;
   repeatImage: p5.Image;
-
-  flower: p5.Image;
    cloud: p5.Image;
+   score: p5.Image;
 
 
 }
