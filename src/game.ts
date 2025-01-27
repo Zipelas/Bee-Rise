@@ -31,9 +31,23 @@ class Game {
     } else if (this.activeScene === "game") {
       this.gameWorld.draw();
     }
+
   }
+  
+ 
   
   public changeScene(nextScene: "start" | "gameover" | "game") {
     this.activeScene = nextScene;
   }
 }
+
+
+
+
+
+
+
+
+
+
+

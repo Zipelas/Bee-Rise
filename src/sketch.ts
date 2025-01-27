@@ -3,18 +3,18 @@
 let game: Game;
 
 let images: {
+  flower: p5.Image;
   player: p5.Image;
   backgroundImage: p5.Image;
   arrowImage: p5.Image;  
   continueImage: p5.Image;
   exitImage: p5.Image;
   repeatImage: p5.Image;
+
   flower: p5.Image;
    cloud: p5.Image;
-   score: p5.Image;
-   pausebtn: p5.Image;
-   playbtn: p5.Image;
-   cloud2: p5.Image;
+
+
 }
 
 
@@ -28,27 +28,22 @@ let images: {
 
 
 function preload() {
-  
 
   images = {
-    player: loadImage("assets/images/bee.png"),
-    backgroundImage: loadImage("assets/images/background.jpg"),
-    arrowImage: loadImage("assets/images/arrowkeys.png"),
-    continueImage: loadImage("assets/images/play-green.png"),
-    exitImage: loadImage("assets/images/exit.png"),
-    repeatImage: loadImage("assets/images/repeat.png"),
-    cloud: loadImage("assets/images/cloud.png"),
-    score: loadImage("assets/images/sun.png"),
-    flower: loadImage("assets/images/flower1.png"),
-    pausebtn: loadImage("assets/images/pause.png"),
-    playbtn: loadImage("assets/images/play-black.png"),
-    cloud2: loadImage("assets/images/cloud.png"), 
+    flower: loadImage("/assets/images/flower1.png"),
+    player: loadImage("/assets/images/bee.png"),
+    backgroundImage: loadImage("/assets/images/background.jpg"),
+    arrowImage: loadImage("/assets/images/arrowkeys.png"),
+    continueImage: loadImage("/assets/images/play-green.png"),
+    exitImage: loadImage("/assets/images/exit.png"),
+    repeatImage: loadImage("/assets/images/repeat.png"),
+     cloud: loadImage("assets/images/cloud.png"),
+  score: loadImage("assets/images/sun.png")
 
   };
-
-
-
 }
+
+
 
 /**
  * Built in setup function in P5
@@ -62,13 +57,7 @@ function setup() {
   frameRate(60);
 
 
-
-
   game = new Game();
-
-  //music.mystery.setVolume(0.8);
-
-  game = new Game;
 
 }
 

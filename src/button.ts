@@ -1,4 +1,5 @@
 class Button {
+
   private title: string;
   private x: number;
   private y: number;
@@ -80,3 +81,4 @@ class Button {
     return this.isMouseOver() && mouseIsPressed;
   }
 }
+

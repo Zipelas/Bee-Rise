@@ -20,8 +20,7 @@ class PauseMenu implements Scene {
       "Alfa Slab One",
       this.continueImage,
       0,
-      0,
-    
+      0
     );
 
     this.exitButton = new Button(
@@ -35,7 +34,7 @@ class PauseMenu implements Scene {
       "Alfa Slab One",
       this.exitImage,
       0,
-      0
+      40
     );
   }
 

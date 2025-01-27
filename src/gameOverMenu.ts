@@ -22,7 +22,6 @@ class GameOverMenu implements Scene {
           this.repeatImage,
           0, // Add the missing arguments
           0,
-          
         );
     
         this.exitButton = new Button(
@@ -35,9 +34,9 @@ class GameOverMenu implements Scene {
           "black",
           "Alfa Slab One",
           this.exitImage,
-          0, // Add the missing arguments
           0,
-          
+          40
+
         );
   }
 

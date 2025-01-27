@@ -1,4 +1,5 @@
 class Flower extends Entity {  
+
   // private gap: number
   
     constructor() {
@@ -11,3 +12,11 @@ class Flower extends Entity {
     }
   
     }
+
+// private gap: number
+
+  // const xMin = width * 0.3; // 30% från vänster
+  // const xMax = width * 0.7 - 120; // 70% från vänster minus blommans bredd
+  // const x = random(xMin, xMax); // Slumpa X inom 30%-70% intervallet
+  // const y = random(0, height - 100); // Y är slumpmässig inom skärmens höjd
+
