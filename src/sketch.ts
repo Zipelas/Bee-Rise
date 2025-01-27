@@ -2,6 +2,7 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
 let images: {
+  flower: p5.Image;
   player: p5.Image;
   backgroundImage: p5.Image;
   arrowImage: p5.Image;  
@@ -10,7 +11,7 @@ let images: {
   repeatImage: p5.Image;
   cloud: p5.Image;
   score: p5.Image;
-}
+};
 
 
 //let music: {
@@ -28,6 +29,7 @@ let images: {
 function preload() {
 
   images = {
+    flower: loadImage("/assets/images/flower1.png"),
     player: loadImage("/assets/images/bee.png"),
     backgroundImage: loadImage("/assets/images/background.jpg"),
     arrowImage: loadImage("/assets/images/arrowkeys.png"),
@@ -36,9 +38,10 @@ function preload() {
     repeatImage: loadImage("/assets/images/repeat.png"),
     cloud: loadImage("assets/images/cloud.png"),
     score: loadImage("assets/images/sun.png")
-
   };
-}
+  
+    };
+
 
 /**
  * Built in setup function in P5
