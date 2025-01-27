@@ -20,7 +20,7 @@ class Button {
     backgroundColor: string,
     textColor: string,
     font: string,
-    image?: p5.Image,
+    image: p5.Image,
     cornerRadius?: number,
     textSize: number,
 )

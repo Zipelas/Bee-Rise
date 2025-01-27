@@ -12,6 +12,9 @@ let images: {
   flower: p5.Image;
    cloud: p5.Image;
    score: p5.Image;
+   pausebtn: p5.Image;
+   playbtn: p5.Image;
+   cloud2: p5.Image;
 }
 
 
@@ -37,6 +40,9 @@ function preload() {
     cloud: loadImage("assets/images/cloud.png"),
     score: loadImage("assets/images/sun.png"),
     flower: loadImage("assets/images/flower1.png"),
+    pausebtn: loadImage("assets/images/pause.png"),
+    playbtn: loadImage("assets/images/play-black.png"),
+    cloud2: loadImage("assets/images/cloud.png"), 
 
   };
 

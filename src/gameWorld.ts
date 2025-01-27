@@ -21,7 +21,7 @@ class GameWorld implements Scene {
     for (let i = 0; i < 5; i++) {
       let width = random(50, 150); // Random cloud width
       let height = random(30, 80); // Random cloud height
-      let x: number, y: number;
+      let x: number = 0, y: number = 0;
       let validPosition = false;
 
       while (!validPosition) {
@@ -42,19 +42,26 @@ class GameWorld implements Scene {
       this.gameEntities.push(cloud); // Add cloud to game entities
     }
   }
-
-  // Initialize player and flowers
   private initializeEntities() {
-    // Add the player to the game
-    const player = new Player();
-    this.gameEntities.push(player);
-
-    // Add flowers to the game
-    const numberOfFlowers = floor(random(5, 7)); // Random number of flowers
-    for (let i = 0; i < numberOfFlowers; i++) {
-      const flower = new Flower(i); // Pass index for flower placement
+    // Define the positions for the flowers to create a cross pattern
+    const flowerPositions = [
+      createVector(width * 0.5, height * 0.3), // Top of the cross
+      createVector(width * 0.5, height * 0.7), // Bottom of the cross
+      createVector(width * 0.3, height * 0.5), // Left of the cross
+      createVector(width * 0.7, height * 0.5), // Right of the cross
+      createVector(width * 0.5, height * 0.5), // Center of the cross
+    ];
+  
+    // Create flowers at the defined positions
+    for (const pos of flowerPositions) {
+      const flower = new Flower();
+      flower.position = pos; // Set flower position to the defined spot
       this.gameEntities.push(flower);
     }
+  
+    // Add the player to the game (last in the array)
+    const player = new Player();
+    this.gameEntities.push(player);
   }
 
   // Check collisions between the player and other entities
@@ -73,9 +80,22 @@ class GameWorld implements Scene {
       }
     }
   }
-
-  // Check if two entities collide
   private entitiesCollide(o1: Entity, o2: Entity): boolean {
+    if (o2 instanceof Flower) {
+      // Define the center (yellow part) of the flower
+      const flowerCenterX = o2.position.x + o2.size.x / 2;
+      const flowerCenterY = o2.position.y + o2.size.y / 2;
+      const flowerCenterRadius = o2.size.x / 4; // Assume the yellow part is a circle with radius size.x / 4
+  
+      // Check if the player's center is within the flower's center circle
+      const playerCenterX = o1.position.x + o1.size.x / 2;
+      const playerCenterY = o1.position.y + o1.size.y / 2;
+  
+      const distance = dist(playerCenterX, playerCenterY, flowerCenterX, flowerCenterY);
+      return distance <= flowerCenterRadius;
+    }
+  
+    // Default rectangle collision
     return (
       o1.position.x < o2.position.x + o2.size.x &&
       o1.position.x + o1.size.x > o2.position.x &&
@@ -92,14 +112,25 @@ class GameWorld implements Scene {
     this.checkCollision();
   }
 
-  // Draw all game entities and the score
-  public draw(): void {
-    background("#2a9ec7"); // Set the background color
+ // Draw all game entities and the score
+public draw(): void {
+  background("#2a9ec7"); // Set the background color
 
-    for (const entity of this.gameEntities) {
+  // Draw non-player entities first
+  for (const entity of this.gameEntities) {
+    if (!(entity instanceof Player)) {
       entity.draw();
     }
-
-    this.score.draw(); // Draw the score
   }
+
+  // Draw the player last to ensure it appears in front
+  for (const entity of this.gameEntities) {
+    if (entity instanceof Player) {
+      entity.draw();
+    }
+  }
+
+  // Draw the score
+  this.score.draw();
+}
 }
