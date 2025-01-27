@@ -134,3 +134,4 @@ public draw(): void {
   this.score.draw();
 }
 }
+
