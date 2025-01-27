@@ -14,9 +14,7 @@ let images: {
    score: p5.Image;
 }
 
-//let music: {
-  //mystery: p5.SoundFile;
-//}; // Global variabel för canvas
+
 
 
 /**
@@ -37,7 +35,7 @@ function preload() {
     exitImage: loadImage("assets/images/exit.png"),
     repeatImage: loadImage("assets/images/repeat.png"),
     cloud: loadImage("assets/images/cloud.png"),
-    score: loadImage("assets/images/sunny.png"),
+    score: loadImage("assets/images/sun.png"),
     flower: loadImage("assets/images/flower1.png"),
 
   };
