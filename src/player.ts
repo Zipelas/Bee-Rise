@@ -8,7 +8,6 @@ class Player extends Entity {
   constructor() {
     super(width * 0.5, height - 120, 100, 120, 0, 0, images.player);
     this.groundLevel = height - 120;
-    this.velocity.y = -this.jumpStrength;
   }
 
   public update() {
