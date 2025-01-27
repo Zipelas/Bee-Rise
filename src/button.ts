@@ -56,6 +56,7 @@ class Button {
     }
 
     // Rita knappens text med rätt typsnitt
+    noStroke();
     textAlign(CENTER, CENTER);
     textSize(this.textSize);
     textFont(this.font); // Sätt typsnittet här
