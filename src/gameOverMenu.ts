@@ -43,10 +43,11 @@ class GameOverMenu implements Scene {
   public update() {
     if (this.repeatButton.isClicked()) {
       // byt scene A
-      // game.changeScene()
+      game.changeScene("game")
     }
     if (this.exitButton.isClicked()) {
       // byt scene B
+      game.changeScene("start");
     }
   }
 

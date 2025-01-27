@@ -3,17 +3,21 @@ class Game {
   private gameOverMenu: GameOverMenu;
   private gameWorld: GameWorld;
   private activeScene: "start" | "gameover" | "game";
+  private isPaused: boolean;
 
 
   constructor() {
     this.startMenu = new StartMenu(() => this.changeScene("game"));
     this.gameOverMenu = new GameOverMenu();
-    this. gameWorld = new GameWorld(() => this.changeScene("gameover"));
+    this.gameWorld = new GameWorld();
     this.activeScene = "start";
+    this.isPaused = false;
   }
 
   
   public update() {
+    if (this.isPaused) return;
+
     if (this.activeScene === "start") {
       this.startMenu.update();
     } else if (this.activeScene === "gameover") {
@@ -34,11 +38,14 @@ class Game {
 
   }
   
- 
-  
   public changeScene(nextScene: "start" | "gameover" | "game") {
     this.activeScene = nextScene;
+    if (nextScene === "gameover") {
+      this.isPaused = true; // Pause the game when game over scene is active
+    } else {
+      this.isPaused = false;
   }
+}
 }
 
 

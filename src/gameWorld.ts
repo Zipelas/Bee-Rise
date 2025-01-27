@@ -136,11 +136,18 @@ class GameWorld implements Scene {
     );
   }
 
+  private checkPlayerFall() {
+    const player = this.gameEntities.find(entity => entity instanceof Player);
+    if (player && player.position.y > height) {
+      game.changeScene("gameover"); // Switch to game over scene 
+    }
+  }
 
   public update() {
     for (const gameEntitie of this.gameEntities) {
         gameEntitie.update();
       }
+      this.checkPlayerFall();
       this.checkCollision();
     }
      
