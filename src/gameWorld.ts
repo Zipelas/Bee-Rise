@@ -7,7 +7,7 @@ class GameWorld implements Scene {
   private score: Score; // Score instance
 
   constructor() {
-    this.gameEntities = [new Player()];
+    this.gameEntities = [new Player(), this.createRandomEnemy()];
     this.cloudImage = images.cloud; // Load the cloud image
 
     // Initialize the score system
@@ -20,8 +20,6 @@ class GameWorld implements Scene {
     this.addFlowers();// Initialize player and flowers
   }
 
- 
-
   private addFlowers() {
     const numberOfFlowers = floor(random(5, 7));
     for (let i = 0; i < numberOfFlowers; i++) {
@@ -29,7 +27,12 @@ class GameWorld implements Scene {
     }
   }
   
-  
+  private createRandomEnemy(): Enemy {
+    const types: ("bird" | "ufo" | "plane")[] = ["bird", "ufo", "plane"];
+    const randomType = random(types); // Slumpa en typ
+    return new Enemy(randomType);
+}
+
   /*private checkCollision() {
     for (const gameEntitie of this.gameEntities) {
       if (gameEntitie instanceof Player) {

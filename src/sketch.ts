@@ -3,17 +3,18 @@
 let game: Game;
 
 let images: {
-  flower: p5.Image;
   player: p5.Image;
+  bird: p5.Image;
+  ufo: p5.Image;
+  plane: p5.Image;
+  flower: p5.Image;
   backgroundImage: p5.Image;
   arrowImage: p5.Image;  
   continueImage: p5.Image;
   exitImage: p5.Image;
   repeatImage: p5.Image;
-   cloud: p5.Image;
-   score: p5.Image;
-
-
+  cloud: p5.Image;
+  score: p5.Image;
 }
 
 
@@ -24,21 +25,20 @@ let images: {
  * This is a good place to load assets such as
  * sound files, images etc...
  */
-
-
 function preload() {
-
   images = {
     flower: loadImage("/assets/images/flower1.png"),
     player: loadImage("/assets/images/bee.png"),
+    bird: loadImage("/assets/images/bird.gif"),
+    ufo: loadImage("/assets/images/ufo.gif"),
+    plane: loadImage("/assets/images/Plane.gif"),
     backgroundImage: loadImage("/assets/images/background.jpg"),
     arrowImage: loadImage("/assets/images/arrowkeys.png"),
     continueImage: loadImage("/assets/images/play-green.png"),
     exitImage: loadImage("/assets/images/exit.png"),
     repeatImage: loadImage("/assets/images/repeat.png"),
-     cloud: loadImage("assets/images/cloud.png"),
-  score: loadImage("assets/images/sun.png")
-
+    cloud: loadImage("assets/images/cloud.png"),
+    score: loadImage("assets/images/sun.png")
   };
 }
 
