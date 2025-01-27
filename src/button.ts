@@ -1,4 +1,5 @@
 class Button {
+
   private title: string;
   private x: number;
   private y: number;
@@ -20,7 +21,7 @@ class Button {
     backgroundColor: string,
     textColor: string,
     font: string,
-    image?: p5.Image,
+    image: p5.Image,
     cornerRadius?: number,
     textSize: number,
 )
@@ -80,3 +81,4 @@ class Button {
     return this.isMouseOver() && mouseIsPressed;
   }
 }
+

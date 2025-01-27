@@ -1,14 +1,13 @@
+
 class PauseMenu implements Scene {
   private continueImage: p5.Image;
   private exitImage: p5.Image;
   private continueButton: Button;
   private exitButton: Button;
-  private backgroundImage: p5.Image;
 
   constructor() {
     this.continueImage = images.continueImage;
     this.exitImage = images.exitImage;
-    this.backgroundImage = images.backgroundImage;
 
     this.continueButton = new Button(
       "Continue",
@@ -18,7 +17,10 @@ class PauseMenu implements Scene {
       60,
       "#d20007",
       "black",
-      this.continueImage
+      "Alfa Slab One",
+      this.continueImage,
+      0,
+      0
     );
 
     this.exitButton = new Button(
@@ -29,7 +31,10 @@ class PauseMenu implements Scene {
       60,
       "#d20007",
       "black",
-      this.exitImage
+      "Alfa Slab One",
+      this.exitImage,
+      0,
+      40
     );
   }
 
@@ -43,9 +48,6 @@ class PauseMenu implements Scene {
   }
 
   public draw() {
-    // Draw background image
-    image(this.backgroundImage, 0, 0, width, height);
-
     // Draw transparent rectangle background
     this.drawTransparent(width * 0.5, height * 0.5, 900, 500, 250);
 
@@ -71,3 +73,6 @@ class PauseMenu implements Scene {
     this.exitButton.draw();
   }
 }
+
+
+

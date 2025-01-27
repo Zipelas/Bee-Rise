@@ -1,9 +1,7 @@
+
 //---- GLOBAL VARIABLES ----//
 let game: Game;
 
-//let music: {
-  //mystery: p5.SoundFile;
-//}
 let images: {
   player: p5.Image;
   bird: p5.Image;
@@ -15,11 +13,12 @@ let images: {
   continueImage: p5.Image;
   exitImage: p5.Image;
   repeatImage: p5.Image;
+  cloud: p5.Image;
+  score: p5.Image;
 }
-  
-  let music: {
-    bgMusic: p5.SoundFile;
-}
+
+
+
 
 /**
  * Built in preload function in P5
@@ -28,7 +27,7 @@ let images: {
  */
 function preload() {
   images = {
-    flower: loadImage("/assets/images/flower.png"),
+    flower: loadImage("/assets/images/flower1.png"),
     player: loadImage("/assets/images/bee.png"),
     bird: loadImage("/assets/images/bird.gif"),
     ufo: loadImage("/assets/images/ufo.gif"),
@@ -38,13 +37,12 @@ function preload() {
     continueImage: loadImage("/assets/images/play-green.png"),
     exitImage: loadImage("/assets/images/exit.png"),
     repeatImage: loadImage("/assets/images/repeat.png"),
-      
-    };
-    
-    music = {
-     bgMusic: loadSound("./assets/music/startMenuSound.mp3")
-   };
+    cloud: loadImage("assets/images/cloud.png"),
+    score: loadImage("assets/images/sun.png")
+  };
 }
+
+
 
 /**
  * Built in setup function in P5
@@ -54,12 +52,12 @@ function preload() {
  */
 
 function setup() {
- createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight);
   frameRate(60);
 
-  music.bgMusic.setVolume(0.8);
 
   game = new Game();
+
 }
 
 /**
@@ -68,13 +66,10 @@ function setup() {
  * you created in the setup function above
  */
 function draw() {
-  game.update();
+ game.update();
   game.draw();
-}
-
+} 
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(windowWidth, windowHeight)
 }
-
-

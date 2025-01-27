@@ -85,4 +85,5 @@ class StartMenu implements Scene {
     this.playButton.draw();
     this.drawInstructions();
   }
+
 }
