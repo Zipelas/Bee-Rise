@@ -14,7 +14,7 @@ class Enemy extends Entity {
                 image = images.ufo;
                 width = 150;
                 height = 80;
-                speedX = random(-6, -3); // Rörelse från höger till vänster
+                speedX = random(-5, -2); // Rörelse från höger till vänster
                 speedY = random(-1, 1); // Lätt vertikal rörelse
                 startX = windowWidth + width; // Start från höger utanför skärmen
                 startY = random(height * 0.1, height * 0.3); // Slumpmässig höjd (10% till 30%)
@@ -24,8 +24,8 @@ class Enemy extends Entity {
                 image = images.plane;
                 width = 120;
                 height = 60;
-                speedX = random(4, 8); // Rörelse från vänster till höger
-                speedY = random(-2, 2); // Lätt vertikal rörelse
+                speedX = random(4, 4); // Rörelse från vänster till höger
+                speedY = random(2, 3); // Lätt vertikal rörelse
                 startX = -width; // Start från vänster utanför skärmen
                 startY = random(height * 0.6, height * 0.9); // Slumpmässig höjd (60% till 90%)
                 break;
