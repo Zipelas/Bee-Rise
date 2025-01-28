@@ -98,6 +98,9 @@ class GameWorld implements Scene {
           if (this.entitiesCollide(gameEntity, otherEntity)) {
             if (otherEntity instanceof Flower) {
               gameEntity.jump(); // example reaction
+            } else if (otherEntity instanceof Enemy) {
+              gameEntity.velocity.y = 10;
+              gameEntity.position.y = height + 100;
             }
           }
         }
