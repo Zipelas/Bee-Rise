@@ -1,74 +1,79 @@
-
 /// <reference path="scene.ts" />
 class GameOverMenu implements Scene {
   private repeatImage: p5.Image;
   private exitImage: p5.Image;
   private repeatButton: Button;
   private exitButton: Button;
+  private rectX: number;
+  private rectY: number;
+  private rectWidth: number;
+  private rectHeight: number;
+  private cornerRadius: number;
 
   constructor() {
-        this.repeatImage = images.repeatImage;
-        this.exitImage = images.exitImage;
+    this.repeatImage = images.repeatImage;
+    this.exitImage = images.exitImage;
+    this.rectX = width * 0.5;
+    this.rectY = height * 0.5;
+    this.rectWidth = 900;
+    this.rectHeight = 500;
+    this.cornerRadius = 250;
 
-        this.repeatButton = new Button(
-          "Repeat",
-          width * 0.4 + 50,
-          height * 0.54,
-          180,
-          60,
-          "#d20007",
-          "black",
-          "Alfa Slab One",
-          this.repeatImage,
-          0, // Add the missing arguments
-          0,
-        );
-    
-        this.exitButton = new Button(
-          "Exit",
-          width * 0.6 + 50,
-          height * 0.54,
-          180,
-          60,
-          "#d20007",
-          "black",
-          "Alfa Slab One",
-          this.exitImage,
-          0,
-          40
+    this.repeatButton = new Button(
+      "Repeat",
+      width * 0.4 + 50,
+      height * 0.54,
+      180,
+      60,
+      "#d20007",
+      "black",
+      "Alfa Slab One",
+      this.repeatImage,
+      0,
+      0
+    );
 
-        );
+    this.exitButton = new Button(
+      "Exit",
+      width * 0.6 + 50,
+      height * 0.54,
+      180,
+      60,
+      "#d20007",
+      "black",
+      "Alfa Slab One",
+      this.exitImage,
+      0,
+      40
+    );
   }
 
   public update() {
-    if (this.repeatButton.isClicked()) {
-      // byt scene A
-      // game.changeScene()
-    }
+    // if (this.repeatButton.isClicked()) {
+    //   game.changeScene("game");
+    // }
     if (this.exitButton.isClicked()) {
-      // byt scene B
+      game.changeScene("start");
     }
   }
 
   public draw() {
-    this.drawTransparent(width * 0.5, height * 0.5, 900, 500, 250);
-
+    this.drawTransparent();
     this.drawGameOverText();
-
     this.drawButtons();
   }
 
-  private drawTransparent(
-    rectX: number,
-    rectY: number,
-    rectWidth: number,
-    rectHeight: number,
-    cornerRadius: number
-  ) {
+  private drawTransparent() {
     fill(255, 255, 255, 120);
     noStroke();
     rectMode(CENTER);
-    rect(rectX, rectY, rectWidth , rectHeight, cornerRadius);
+    rect(
+      this.rectX,
+      this.rectY,
+      this.rectWidth,
+      this.rectHeight,
+      this.cornerRadius
+    );
   }
   private drawGameOverText() {
     textFont("Modak");
@@ -85,6 +90,3 @@ class GameOverMenu implements Scene {
     this.exitButton.draw();
   }
 }
-
-
-
