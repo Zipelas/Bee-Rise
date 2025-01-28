@@ -2,7 +2,6 @@ class Entity {
   public position: p5.Vector;
   public size: p5.Vector;
   protected velocity: p5.Vector;
-
   protected image: p5.Image;
 
   constructor(
@@ -27,7 +26,13 @@ class Entity {
 
   public draw() {
     push();
-    image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
+    image(
+      this.image,
+      this.position.x,
+      this.position.y,
+      this.size.x,
+      this.size.y
+    );
     pop();
   }
 }
