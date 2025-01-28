@@ -4,6 +4,7 @@ class GameWorld implements Scene {
   private score: Score; // Score instance
 
   private cameraOffset: p5.Vector; // We track how to shift the view
+  private highestYReached: number; // Track the smallest y-value (the highest point)
 
   constructor() {
     this.gameEntities = [new Player(), this.createRandomEnemy()];
@@ -12,6 +13,13 @@ class GameWorld implements Scene {
     // Initialize the score system
     const scorePosition = createVector(-100, -100); // Position for the score
     this.score = new Score("black", 0, 0, scorePosition, images.score); // Create score instance
+
+
+    // Initialize camera offset
+    this.cameraOffset = createVector(0, 0);
+
+    // Initialize highest y to a large number so we can track any new best
+    this.highestYReached = Infinity;
 
     this.initializeClouds(); // Initialize clouds
     this.initializeFlowers();
@@ -152,14 +160,26 @@ class GameWorld implements Scene {
     const player = this.gameEntities.find(e => e instanceof Player) as Player;
     if (player) {
 
-      this.cameraOffset.x = 0; // We do NOT move horizontally, so cameraOffset.x = 0
-      this.cameraOffset.y = height * 0.7 - (player.position.y + player.size.y / 2); // ONLY follow the player vertically:
+      // We do NOT move horizontally, so cameraOffset.x = 0
+      this.cameraOffset.x = 0;
+
+      // ONLY follow the player vertically:
+      this.cameraOffset.y = height * 0.7 - (player.position.y + player.size.y / 2);
+
+      // Check if the player reached a new highest position (smaller y is "higher")
+      if (player.position.y < this.highestYReached) {
+        this.highestYReached = player.position.y;
+        // Increase score by 1 each time the player surpasses the old record
+        this.score.update();
       }
-      
+    }
     this.checkPlayerFall();
     this.checkCollision();
-  };
-   
+
+  }
+
+
+
   public draw(): void {
     background("#2a9ec7");
 
