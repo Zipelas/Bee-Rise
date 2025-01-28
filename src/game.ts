@@ -16,8 +16,6 @@ class Game {
 
   
   public update() {
-    if (this.isPaused) return;
-
     if (this.activeScene === "start") {
       this.startMenu.update();
     } else if (this.activeScene === "gameover") {
