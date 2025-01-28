@@ -3,7 +3,9 @@ class Entity {
   public size: p5.Vector;
   public velocity: p5.Vector;
   protected image: p5.Image;
-
+  // private hitBoxPos: p5.Vector;
+  // private hitBoxRadius: number;
+//inför hitbox
   constructor(
     x: number,
     y: number,
@@ -33,6 +35,10 @@ class Entity {
       this.size.x,
       this.size.y
     );
+    // noFill();
+    // stroke("red");
+    // circle()
+    //sätt rn border för att se hitbox
     pop();
   }
 }

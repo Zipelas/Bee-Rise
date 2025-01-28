@@ -152,6 +152,7 @@ class GameWorld implements Scene {
     }
   }
 
+
   public update() {
     for (const gameEntitie of this.gameEntities) {
       gameEntitie.update();

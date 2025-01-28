@@ -37,11 +37,11 @@ class Score {
     fill(this.color);
     textAlign(CENTER, CENTER);
 
-    textSize(30); 
+    textStyle(NORMAL); 
     // The next line is just a placeholder; customize your font if needed:
     textFont('letter-spacing');
-    text("POINTS", this.position.x + 160, this.position.y + 150); // Adjust position
     textSize(30); // Larger size for the score number
+    text("POINTS", this.position.x + 160, this.position.y + 150); // Adjust position
     text(this.currentScore.toString(), this.position.x + 150, this.position.y + 200); // Adjust position for score
 
     pop();
