@@ -1,4 +1,3 @@
-
 class PauseMenu implements Scene {
   private continueImage: p5.Image;
   private exitImage: p5.Image;
@@ -65,7 +64,7 @@ class PauseMenu implements Scene {
     fill(255, 255, 255, 120); // Semi-transparent white
     noStroke();
     rectMode(CENTER);
-    rect(rectX, rectY, rectWidth , rectHeight, cornerRadius);
+    rect(rectX, rectY, rectWidth, rectHeight, cornerRadius);
   }
 
   private drawButtons() {
@@ -73,6 +72,3 @@ class PauseMenu implements Scene {
     this.exitButton.draw();
   }
 }
-
-
-
