@@ -40,6 +40,12 @@ class Game {
     this.activeScene = nextScene;
 
   }
+
+  public resetGame() {
+    this.gameWorld = new GameWorld(); // Skapa en ny instans av spelet
+    this.activeScene = "game"; // Byt till spelet
+  }
+  
 }
 
 
