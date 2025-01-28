@@ -3,6 +3,8 @@ class GameWorld implements Scene {
   private cloudImage: p5.Image;
   private score: Score; // Score instance
 
+  private cameraOffset: p5.Vector; // We track how to shift the view
+
   constructor() {
     this.gameEntities = [new Player(), this.createRandomEnemy()];
     this.cloudImage = images.cloud; // Load the cloud image
@@ -14,18 +16,18 @@ class GameWorld implements Scene {
     this.initializeClouds(); // Initialize clouds
     this.initializeFlowers();
     this.generateBottomPlatform();
-    // Initialize player and flowers
+    this.cameraOffset = createVector(0, 0);
   }
 
   private createRandomEnemy(): Enemy {
     const types: ("bird" | "ufo" | "plane")[] = ["bird", "ufo", "plane"];
-    const randomType = random(types); // Slumpa en typ
+    const randomType = random(types);
     return new Enemy(randomType);
   }
 
   private initializeClouds() {
-    const cloudPositions: { x: number; y: number }[] = []; // To track existing cloud positions
-
+    const cloudPositions: { x: number; y: number }[] = [];
+    
     for (let i = 0; i < 5; i++) {
       let width = random(50, 150); // Random cloud width
       let height = random(30, 80); // Random cloud height
@@ -34,8 +36,8 @@ class GameWorld implements Scene {
       let validPosition = false;
 
       while (!validPosition) {
-        x = random(0, width + 1200); // Random horizontal position
-        y = random(0, height + 1000); // Random vertical position
+        x = random(0, width + 1200);
+        y = random(0, height + 1000);
 
         // Ensure clouds do not overlap
         while (!validPosition) {
@@ -60,7 +62,6 @@ class GameWorld implements Scene {
   }
 
   private initializeFlowers() {
-    // Define the positions for the flowers to create a cross pattern
     const flowerPositions = [];
 
     // Generera 5 blommor med horisontell position mellan 30% och 70%
@@ -73,7 +74,7 @@ class GameWorld implements Scene {
     // Create flowers at the defined positions
     for (const pos of flowerPositions) {
       const flower = new Flower();
-      flower.position = pos; // Set flower position to the defined spot
+      flower.position = pos;
       this.gameEntities.push(flower);
     }
   }
@@ -92,11 +93,11 @@ class GameWorld implements Scene {
     for (const gameEntity of this.gameEntities) {
       if (gameEntity instanceof Player) {
         for (const otherEntity of this.gameEntities) {
-          if (otherEntity instanceof Player) continue; // Skip self
+          if (otherEntity instanceof Player) continue;
 
           if (this.entitiesCollide(gameEntity, otherEntity)) {
             if (otherEntity instanceof Flower) {
-              gameEntity.jump(); // Player jumps on collision with a flower
+              gameEntity.jump(); // example reaction
             }
           }
         }
@@ -106,7 +107,7 @@ class GameWorld implements Scene {
 
   private entitiesCollide(o1: Entity, o2: Entity): boolean {
     if (o2 instanceof Flower) {
-      // Define the center (yellow part) of the flower
+      // Flower center
       const flowerCenterX = o2.position.x + o2.size.x / 2;
       const flowerCenterY = o2.position.y + o2.size.y / 2;
       const flowerCenterRadius = o2.size.x / 4; // Assume the yellow part is a circle with radius size.x / 4
@@ -144,26 +145,39 @@ class GameWorld implements Scene {
     for (const gameEntitie of this.gameEntities) {
       gameEntitie.update();
     }
+    // Find the player
+    const player = this.gameEntities.find(e => e instanceof Player) as Player;
+    if (player) {
+
+      this.cameraOffset.x = 0; // We do NOT move horizontally, so cameraOffset.x = 0
+      this.cameraOffset.y = height * 0.7 - (player.position.y + player.size.y / 2); // ONLY follow the player vertically:
+      }
+      
     this.checkPlayerFall();
     this.checkCollision();
-  }
-
+  };
+   
   public draw(): void {
     background("#2a9ec7");
 
+    // Shift the entire scene according to cameraOffset
+    push();
+    translate(this.cameraOffset.x, this.cameraOffset.y);
+
+    // Draw non-player entities first
     for (const entity of this.gameEntities) {
       if (!(entity instanceof Player)) {
         entity.draw();
       }
     }
-
-    // Draw the player last to ensure it appears in front
+    
+    // Draw the player on top
     for (const entity of this.gameEntities) {
       if (entity instanceof Player) {
         entity.draw();
       }
     }
-
+    pop();
     this.score.draw();
   }
 }
