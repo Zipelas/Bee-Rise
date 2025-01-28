@@ -1,5 +1,5 @@
 class GameWorld implements Scene {
-  protected gameEntities: Entity[]; // Array for game entities
+  protected gameEntities: Entity[];
   private cloudImage: p5.Image;
   private score: Score; // Score instance
 
@@ -14,14 +14,17 @@ class GameWorld implements Scene {
     const scorePosition = createVector(-100, -100); // Position for the score
     this.score = new Score("black", 0, 0, scorePosition, images.score); // Create score instance
 
+
     // Initialize camera offset
     this.cameraOffset = createVector(0, 0);
 
     // Initialize highest y to a large number so we can track any new best
     this.highestYReached = Infinity;
 
-    this.initializeClouds();
+    this.initializeClouds(); // Initialize clouds
     this.initializeFlowers();
+    this.generateBottomPlatform();
+    this.cameraOffset = createVector(0, 0);
   }
 
   private createRandomEnemy(): Enemy {
@@ -36,7 +39,8 @@ class GameWorld implements Scene {
     for (let i = 0; i < 5; i++) {
       let width = random(50, 150); // Random cloud width
       let height = random(30, 80); // Random cloud height
-      let x: number = 0, y: number = 0;
+      let x: number = 0,
+        y: number = 0;
       let validPosition = false;
 
       while (!validPosition) {
@@ -45,21 +49,22 @@ class GameWorld implements Scene {
 
         // Ensure clouds do not overlap
         while (!validPosition) {
-          x = random(0, width + 1200);
-          y = random(0, height + 1000);
+          x = random(0, width + 1200); // Random horizontal position (canvas size + margin)
+          y = random(0, height + 1000); // Random vertical position (canvas size + margin)
 
-          validPosition = cloudPositions.every(pos => {
+          validPosition = cloudPositions.every((pos) => {
             const distance = dist(pos.x, pos.y, x, y);
-            return distance > Math.max(width, height);
+            return distance > Math.max(width, height); // Ensure spacing
           });
-          
+
           if (validPosition) {
-            cloudPositions.push({ x, y });
+            cloudPositions.push({ x, y }); // Store valid position
           }
         }
+        // Create a static cloud
 
         const cloud = new Moln(x, y, width, height, 0, this.cloudImage);
-        this.gameEntities.push(cloud);
+        this.gameEntities.push(cloud); // Add cloud to game entities
       }
     }
   }
@@ -67,13 +72,13 @@ class GameWorld implements Scene {
   private initializeFlowers() {
     const flowerPositions = [];
 
-    // Generate 5 flowers with horizontal positions between 30% and 70% of the width
+    // Generera 5 blommor med horisontell position mellan 30% och 70%
     for (let i = 0; i < 5; i++) {
-      const x = random(width * 0.3, width * 0.7);
-      const y = random(0, height);
+      const x = random(width * 0.3, width * 0.7); // Mellan 30% och 70% av bredden
+      const y = random(0, height); // Hela höjden av skärmen
       flowerPositions.push(createVector(x, y));
     }
-    
+
     // Create flowers at the defined positions
     for (const pos of flowerPositions) {
       const flower = new Flower();
@@ -82,6 +87,16 @@ class GameWorld implements Scene {
     }
   }
 
+  private generateBottomPlatform() {
+    const y = height - 50;
+    const x = width / 2;
+
+    const bottomFlower = new Flower();
+    bottomFlower.position = createVector(x, y);
+    this.gameEntities.push(bottomFlower);
+  }
+
+  // Check collisions between the player and other entities
   private checkCollision() {
     for (const gameEntity of this.gameEntities) {
       if (gameEntity instanceof Player) {
@@ -103,16 +118,21 @@ class GameWorld implements Scene {
       // Flower center
       const flowerCenterX = o2.position.x + o2.size.x / 2;
       const flowerCenterY = o2.position.y + o2.size.y / 2;
-      const flowerCenterRadius = o2.size.x / 4; 
+      const flowerCenterRadius = o2.size.x / 4; // Assume the yellow part is a circle with radius size.x / 4
 
-      // Player center
+      // Check if the player's center is within the flower's center circle
       const playerCenterX = o1.position.x + o1.size.x / 2;
       const playerCenterY = o1.position.y + o1.size.y / 2;
 
-      const distance = dist(playerCenterX, playerCenterY, flowerCenterX, flowerCenterY);
+      const distance = dist(
+        playerCenterX,
+        playerCenterY,
+        flowerCenterX,
+        flowerCenterY
+      );
       return distance <= flowerCenterRadius;
     }
-  
+
     // Default rectangle collision
     return (
       o1.position.x < o2.position.x + o2.size.x &&
@@ -122,15 +142,21 @@ class GameWorld implements Scene {
     );
   }
 
-  public update() {
-    // Update all entities (including the player)
-    for (const gameEntity of this.gameEntities) {
-      gameEntity.update();
+  private checkPlayerFall() {
+    const player = this.gameEntities.find((entity) => entity instanceof Player);
+    if (player && player.position.y > height) {
+      game.changeScene("gameover"); // Switch to game over scene
     }
+  }
 
+  public update() {
+    for (const gameEntitie of this.gameEntities) {
+      gameEntitie.update();
+    }
     // Find the player
     const player = this.gameEntities.find(e => e instanceof Player) as Player;
     if (player) {
+
       // We do NOT move horizontally, so cameraOffset.x = 0
       this.cameraOffset.x = 0;
 
@@ -144,9 +170,12 @@ class GameWorld implements Scene {
         this.score.update();
       }
     }
-
+    this.checkPlayerFall();
     this.checkCollision();
+
   }
+
+
 
   public draw(): void {
     background("#2a9ec7");
@@ -168,11 +197,7 @@ class GameWorld implements Scene {
         entity.draw();
       }
     }
-
-    // Revert to default coordinate system
     pop();
-    
-    // Draw the score in screen space
     this.score.draw();
-  } 
+  }
 }

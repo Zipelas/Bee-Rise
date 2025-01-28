@@ -2,7 +2,6 @@ class StartMenu implements Scene {
   private bgImage: p5.Image;
   private arrowImage: p5.Image;
   private title: string;
-  // private playButtonHovered: boolean = false;
   private playButton: Button;
   private changeSceneCallback: () => void;
 
@@ -17,8 +16,8 @@ class StartMenu implements Scene {
       width * 0.5,
       height * 0.5,
       200,
-      80,
-      "#d20007", 
+      85,
+      "#d20007",
       "#fff",
       "Alfa Slab One",
       undefined,
@@ -28,7 +27,7 @@ class StartMenu implements Scene {
   }
 
   private drawTitle() {
-    push()
+    push();
     textFont("Bee Rise");
     textAlign(CENTER, CENTER);
     textSize(150);
@@ -37,7 +36,7 @@ class StartMenu implements Scene {
     stroke(0);
     strokeWeight(8);
     text(this.title, width / 2, height / 4);
-    pop()
+    pop();
   }
 
   private drawInstructions() {
@@ -46,8 +45,8 @@ class StartMenu implements Scene {
     const rectWidth = 500;
     const rectHeight = 250;
     const cornerRadius = 400;
-    
-    push()
+
+    push();
     // Draw transparent background
     fill(255, 255, 255, 120); // Semi-transparent white
     noStroke();
@@ -65,12 +64,18 @@ class StartMenu implements Scene {
     const arrowKeySize = 60;
     const arrowKeyX = rectX - 40;
     const arrowKeyY = rectY - 20;
-    image(this.arrowImage, arrowKeyX - arrowKeySize / 2, arrowKeyY - 20, 130, 130);
+    image(
+      this.arrowImage,
+      arrowKeyX - arrowKeySize / 2,
+      arrowKeyY - 20,
+      130,
+      130
+    );
 
     textSize(18);
     text("Go left", rectX - 120, rectY + 50);
     text("Go right", rectX + 120, rectY + 50);
-    pop()
+    pop();
   }
 
   public update(): void {
@@ -85,5 +90,4 @@ class StartMenu implements Scene {
     this.playButton.draw();
     this.drawInstructions();
   }
-
 }

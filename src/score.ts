@@ -1,4 +1,5 @@
 class Score {
+
   private color: string; 
   private currentHighScore: number;
   private currentScore: number;
@@ -6,6 +7,7 @@ class Score {
   private image: p5.Image; 
 
   constructor(color: string, currentHighScore: number, currentScore: number, position: p5.Vector, image: p5.Image) {
+
     this.color = color;
     this.currentHighScore = currentHighScore;
     this.currentScore = currentScore;
@@ -13,12 +15,11 @@ class Score {
     this.image = image;
   }
 
-  /**
-   * Increase the score by 1
-   */
+
   public update(): void {
     this.currentScore++;
   }
+
 
   /**
    * (Optional) Add a custom amount to the score
@@ -35,6 +36,7 @@ class Score {
     // Display the score text within the visible portion of the image
     fill(this.color);
     textAlign(CENTER, CENTER);
+
     textSize(30); 
     // The next line is just a placeholder; customize your font if needed:
     textFont('letter-spacing');
