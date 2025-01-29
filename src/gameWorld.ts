@@ -1,30 +1,36 @@
 class GameWorld implements Scene {
   protected gameEntities: Entity[];
   private cloudImage: p5.Image;
-  private score: Score; // Score instance
+  private score: Score;
 
-  private cameraOffset: p5.Vector; // We track how to shift the view
-  private highestYReached: number; // Track the smallest y-value (the highest point)
+  private cameraOffset: p5.Vector;
+  private highestYReached: number;
+  
+  // ADDED: Variables to control flower spawning as player goes higher
+  private nextFlowerSpawnY: number;
+  private spawnInterval: number;
 
   constructor() {
     this.gameEntities = [new Player(), this.createRandomEnemy()];
-    this.cloudImage = images.cloud; // Load the cloud image
+    this.cloudImage = images.cloud; 
 
     // Initialize the score system
-    const scorePosition = createVector(-100, -100); // Position for the score
-    this.score = new Score("black", 0, 0, scorePosition, images.score); // Create score instance
+    const scorePosition = createVector(-100, -100);
+    this.score = new Score("black", 0, 0, scorePosition, images.score);
 
-
-    // Initialize camera offset
     this.cameraOffset = createVector(0, 0);
-
-    // Initialize highest y to a large number so we can track any new best
     this.highestYReached = Infinity;
 
-    this.initializeClouds(); // Initialize clouds
+    // ADDED: spawnInterval and initial nextFlowerSpawnY
+    // E.g., spawn new flowers every 400 pixels up.
+    this.spawnInterval = 400;
+    // If your player starts near the bottom of the screen, 
+    // set this so the first batch spawns once you move above (below in value) y = height - 400
+    this.nextFlowerSpawnY = height - 400;
+
+    this.initializeClouds();
     this.initializeFlowers();
     this.generateBottomPlatform();
-    this.cameraOffset = createVector(0, 0);
   }
 
   private createRandomEnemy(): Enemy {
@@ -35,12 +41,11 @@ class GameWorld implements Scene {
 
   private initializeClouds() {
     const cloudPositions: { x: number; y: number }[] = [];
-    
+
     for (let i = 0; i < 5; i++) {
-      let width = random(50, 150); // Random cloud width
-      let height = random(30, 80); // Random cloud height
-      let x: number = 0,
-        y: number = 0;
+      let width = random(50, 150);
+      let height = random(30, 80);
+      let x: number = 0, y: number = 0;
       let validPosition = false;
 
       while (!validPosition) {
@@ -49,22 +54,21 @@ class GameWorld implements Scene {
 
         // Ensure clouds do not overlap
         while (!validPosition) {
-          x = random(0, width + 1200); // Random horizontal position (canvas size + margin)
-          y = random(0, height + 1000); // Random vertical position (canvas size + margin)
+          x = random(0, width + 1200);
+          y = random(0, height + 1000);
 
           validPosition = cloudPositions.every((pos) => {
             const distance = dist(pos.x, pos.y, x, y);
-            return distance > Math.max(width, height); // Ensure spacing
+            return distance > Math.max(width, height); 
           });
 
           if (validPosition) {
-            cloudPositions.push({ x, y }); // Store valid position
+            cloudPositions.push({ x, y }); 
           }
         }
-        // Create a static cloud
 
         const cloud = new Moln(x, y, width, height, 0, this.cloudImage);
-        this.gameEntities.push(cloud); // Add cloud to game entities
+        this.gameEntities.push(cloud);
       }
     }
   }
@@ -72,10 +76,10 @@ class GameWorld implements Scene {
   private initializeFlowers() {
     const flowerPositions = [];
 
-    // Generera 5 blommor med horisontell position mellan 30% och 70%
+    // Generate 5 flowers with horizontal position between 30% and 70%
     for (let i = 0; i < 5; i++) {
-      const x = random(width * 0.3, width * 0.7); // Mellan 30% och 70% av bredden
-      const y = random(0, height); // Hela höjden av skärmen
+      const x = random(width * 0.3, width * 0.7);
+      const y = random(0, height);
       flowerPositions.push(createVector(x, y));
     }
 
@@ -90,13 +94,11 @@ class GameWorld implements Scene {
   private generateBottomPlatform() {
     const y = height - 50;
     const x = width / 2;
-
     const bottomFlower = new Flower();
     bottomFlower.position = createVector(x, y);
     this.gameEntities.push(bottomFlower);
   }
 
-  // Check collisions between the player and other entities
   private checkCollision() {
     for (const gameEntity of this.gameEntities) {
       if (gameEntity instanceof Player) {
@@ -105,7 +107,7 @@ class GameWorld implements Scene {
 
           if (this.entitiesCollide(gameEntity, otherEntity)) {
             if (otherEntity instanceof Flower) {
-              gameEntity.jump(); // example reaction
+              gameEntity.jump(); 
             } else if (otherEntity instanceof Enemy) {
               game.changeScene("gameover");
             }
@@ -119,51 +121,67 @@ class GameWorld implements Scene {
     const distance = dist(
       o1.hitBoxPos.x, o1.hitBoxPos.y,
       o2.hitBoxPos.x, o2.hitBoxPos.y
-    ); // dist(x1, y1, x2, y2) räknar ut avståndet mellan två punkter (hitboxarnas mittpunkter).
+    );
     return distance <= o1.hitBoxRadius + o2.hitBoxRadius;
-    } // Om avståndet är mindre än eller lika med summan av de två hitboxarnas radier = kollision!
-  
+  }
 
   private checkPlayerFall() {
     const player = this.gameEntities.find((entity) => entity instanceof Player);
     if (player && player.position.y > height) {
-      game.changeScene("gameover"); // Switch to game over scene
+      game.changeScene("gameover");
     }
   }
 
+  // ADDED: Helper method to spawn additional flowers above the player.
+  private spawnFlowersAbovePlayer(playerY: number) {
+    // Decide how many flowers to spawn each time
+    const flowerCount = 5;
+
+    for (let i = 0; i < flowerCount; i++) {
+      const x = random(width * 0.3, width * 0.7);  
+      // Place them somewhere above the player's current Y:
+      const y = playerY - random(200, 400);
+
+      const flower = new Flower();
+      flower.position = createVector(x, y);
+      this.gameEntities.push(flower);
+    }
+  }
 
   public update() {
     for (const gameEntitie of this.gameEntities) {
       gameEntitie.update();
     }
-    // Find the player
+
     const player = this.gameEntities.find(e => e instanceof Player) as Player;
     if (player) {
-
       // We do NOT move horizontally, so cameraOffset.x = 0
       this.cameraOffset.x = 0;
 
       // ONLY follow the player vertically:
       this.cameraOffset.y = height * 0.7 - (player.position.y + player.size.y / 2);
 
-      // Check if the player reached a new highest position (smaller y is "higher")
+      // Check if the player reached a new highest position
       if (player.position.y < this.highestYReached) {
         this.highestYReached = player.position.y;
-        // Increase score by 1 each time the player surpasses the old record
         this.score.update();
       }
+
+      // ADDED: Check if we should spawn more flowers above the player
+      if (player.position.y < this.nextFlowerSpawnY) {
+        this.spawnFlowersAbovePlayer(player.position.y);
+        // Move the threshold further up so we spawn again later
+        this.nextFlowerSpawnY -= this.spawnInterval;
+      }
     }
+
     this.checkPlayerFall();
     this.checkCollision();
-
   }
-
-
 
   public draw(): void {
     background("#2a9ec7");
 
-    // Shift the entire scene according to cameraOffset
     push();
     translate(this.cameraOffset.x, this.cameraOffset.y);
 
@@ -173,7 +191,7 @@ class GameWorld implements Scene {
         entity.draw();
       }
     }
-    
+
     // Draw the player on top
     for (const entity of this.gameEntities) {
       if (entity instanceof Player) {
@@ -181,6 +199,8 @@ class GameWorld implements Scene {
       }
     }
     pop();
+
+    // Draw the score on the HUD (no camera translation)
     this.score.draw();
   }
 }
