@@ -1,6 +1,8 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
-let jumpSound: p5.SoundFile;
+let music: {
+jumpSound: p5.SoundFile;
+};
 
 let images: {
   player: p5.Image;
@@ -23,11 +25,9 @@ let images: {
  * sound files, images etc...
  */
 function preload() {
-  jumpSound = loadSound("/assets/music/jump.mp3", () => {
-    console.log("Jump sound loaded!");
-  }, (err) => {
-    console.error("Failed to load jump sound:", err);
-  });
+  music = {
+  jumpSound: loadSound("/assets/music/jump.mp3")
+}
 
   images = {
     flower: loadImage("/assets/images/flower1.png"),
