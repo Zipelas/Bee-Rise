@@ -137,14 +137,23 @@ class GameWorld implements Scene {
     push();
     translate(this.cameraOffset.x, this.cameraOffset.y);
   
-    // Draw game entities
-    for (const entity of this.gameEntities) entity.draw();
+    // Draw game entities (flowers first, player after)
+    for (const entity of this.gameEntities) {
+      if (entity instanceof Flower) {
+        entity.draw();
+      }
+    }
+  
+    // Draw player last to make sure it appears on top of the flowers
+    const player = this.gameEntities.find(e => e instanceof Player);
+    if (player) {
+      player.draw();
+    }
   
     pop(); // Ensure text is not affected by camera translation
-  
-    // Draw floating texts correctly, without being affected by the camera offset
+    
+    // Draw floating texts correctly
     this.floatingTexts.forEach(text => {
-      // Apply camera offset to floating text position
       push();
       translate(this.cameraOffset.x, this.cameraOffset.y);
       text.draw();
