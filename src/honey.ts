@@ -5,7 +5,8 @@ class Honey extends Entity {
       super(x, y, 50, 50, 0, 0, images.star);
     }
   
-    public applyEffect(player: Player) {
-      player.activatePowerUp();
+    public applyEffect(score: Score) {
+      score.addScore(20);
     }
-  }
+
+}
