@@ -1,7 +1,7 @@
 /// <reference path="entity.ts" />
 
 class Player extends Entity {
-  private jumpStrength: number = 9;
+  private jumpStrength: number = 10;
   private gravity: number = 0.2;
   private groundLevel: number;
  

@@ -78,7 +78,7 @@ class GameWorld implements Scene {
 
     // Generate 5 flowers with horizontal position between 30% and 70%
     for (let i = 0; i < 5; i++) {
-      const x = random(width * 0.3, width * 0.7);
+      const x = random(width * 0.3, width * 0.6);
       const y = random(0, height);
       flowerPositions.push(createVector(x, y));
     }
@@ -135,12 +135,12 @@ class GameWorld implements Scene {
   // ADDED: Helper method to spawn additional flowers above the player.
   private spawnFlowersAbovePlayer(playerY: number) {
     // Decide how many flowers to spawn each time
-    const flowerCount = 5;
+    const flowerCount = 2;
 
     for (let i = 0; i < flowerCount; i++) {
       const x = random(width * 0.3, width * 0.7);  
       // Place them somewhere above the player's current Y:
-      const y = playerY - random(200, 400);
+      const y = playerY - random(500, 1000);
 
       const flower = new Flower();
       flower.position = createVector(x, y);
