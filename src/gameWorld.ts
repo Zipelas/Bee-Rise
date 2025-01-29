@@ -8,6 +8,10 @@ class GameWorld implements Scene {
   private spawnInterval: number;
   private floatingTexts: FloatingText[];
 
+  private skyColors: p5.Color[];
+  private transitionDuration: number;
+  private startTime: number;
+
   constructor() {
     this.gameEntities = [new Player(), this.createRandomEnemy()];
     this.cloudImage = images.cloud;
@@ -21,6 +25,10 @@ class GameWorld implements Scene {
     this.initializeClouds();
     this.initializeFlowers();
     this.generateBottomPlatform();
+
+  this.skyColors = [color("#2a9ec7"), color("#1f6b91"), color("#2d2f3b")];
+    this.transitionDuration = 30000; // övergång tid sekunder
+    this.startTime = millis(); // Starttid för färgövergång
   }
 
   private createRandomEnemy(): Enemy {
@@ -133,7 +141,21 @@ class GameWorld implements Scene {
   }
 
   public draw(): void {
-    background("#2a9ec7");
+        // Hantera bakgrundsfärgövergången
+        const elapsedTime = millis() - this.startTime;
+        const phase = floor(elapsedTime / this.transitionDuration);
+        const t = (elapsedTime % this.transitionDuration) / this.transitionDuration;
+    
+        let currentColor: p5.Color;
+    
+        if (phase < this.skyColors.length - 1) {
+            currentColor = lerpColor(this.skyColors[phase], this.skyColors[phase + 1], t);
+        } else {
+            currentColor = this.skyColors[this.skyColors.length - 1];
+        }
+    
+        background(currentColor);
+    
     push();
     translate(this.cameraOffset.x, this.cameraOffset.y);
   
