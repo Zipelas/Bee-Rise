@@ -137,7 +137,7 @@ class GameWorld implements Scene {
     push();
     translate(this.cameraOffset.x, this.cameraOffset.y);
   
-    // Draw game entities (flowers first, honey, then player)
+    // Draw game entities (flowers first, honey, then enemies and clouds)
     for (const entity of this.gameEntities) {
       if (entity instanceof Flower) {
         entity.draw();
@@ -151,14 +151,24 @@ class GameWorld implements Scene {
       }
     }
   
-    // Draw player last to make sure it appears on top of the flowers and honey
+    // Draw enemies and clouds
+    for (const entity of this.gameEntities) {
+      if (entity instanceof Enemy) {
+        entity.draw();
+      }
+      if (entity instanceof Moln) {  // Assuming Moln is the cloud class
+        entity.draw();
+      }
+    }
+  
+    // Draw player last to make sure it appears on top of the flowers, honey, enemies, and clouds
     const player = this.gameEntities.find(e => e instanceof Player);
     if (player) {
       player.draw();
     }
   
     pop(); // Ensure text is not affected by camera translation
-    
+  
     // Draw floating texts correctly
     this.floatingTexts.forEach(text => {
       push();
@@ -169,7 +179,7 @@ class GameWorld implements Scene {
   
     // Draw the score (outside of camera transform)
     this.score.draw();
-    
+  
     // Ensure honey is added at correct intervals
     if (random(1) < 0.005) {
       this.gameEntities.push(this.createRandomHoney());
