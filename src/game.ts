@@ -37,13 +37,20 @@ class Game {
   }
   
   public changeScene(nextScene: "start" | "gameover" | "game") {
+    if (nextScene === "gameover") {
+      music.backgroundMusic.stop();
+    } else if (nextScene === "game") {
+      if (!music.backgroundMusic.isPlaying()) {
+        music.backgroundMusic.loop();
+      }
+    }
+    
     this.activeScene = nextScene;
-
   }
 
   public resetGame() {
-    this.gameWorld = new GameWorld(); // Skapa en ny instans av spelet
-    this.activeScene = "game"; // Byt till spelet
+    this.gameWorld = new GameWorld();
+    this.activeScene = "game";
   }
   
 }
