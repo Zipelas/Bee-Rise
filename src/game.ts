@@ -3,7 +3,7 @@ class Game {
   private gameOverMenu: GameOverMenu;
   private gameWorld: GameWorld;
   private activeScene: "start" | "gameover" | "game";
-  private isPaused: boolean;
+
 
 
   constructor() {
@@ -11,7 +11,6 @@ class Game {
     this.gameOverMenu = new GameOverMenu();
     this. gameWorld = new GameWorld();
     this.activeScene = "start";
-    this.isPaused = false;
   }
 
   
