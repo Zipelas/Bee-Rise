@@ -104,10 +104,13 @@ class GameWorld implements Scene {
       if (gameEntity instanceof Player) {
         for (const otherEntity of this.gameEntities) {
           if (otherEntity instanceof Player) continue;
-
+  
           if (this.entitiesCollide(gameEntity, otherEntity)) {
             if (otherEntity instanceof Flower) {
-              gameEntity.jump(); 
+              gameEntity.jump();
+            } else if (otherEntity instanceof Honey) {
+              otherEntity.applyEffect(gameEntity); // Activate power-up
+              this.gameEntities = this.gameEntities.filter(e => e !== otherEntity); // Remove Honey
             } else if (otherEntity instanceof Enemy) {
               game.changeScene("gameover");
             }
@@ -148,6 +151,12 @@ class GameWorld implements Scene {
     }
   }
 
+  private createRandomHoney(): Honey {
+    const x = random(width * 0.3, width * 0.7);
+    const y = this.highestYReached - random(500, 1200); // Appear higher up
+    return new Honey(x, y);
+  }
+
   public update() {
     for (const gameEntitie of this.gameEntities) {
       gameEntitie.update();
@@ -177,6 +186,7 @@ class GameWorld implements Scene {
 
     this.checkPlayerFall();
     this.checkCollision();
+    this.createRandomHoney();
   }
 
   public draw(): void {
@@ -197,6 +207,11 @@ class GameWorld implements Scene {
       if (entity instanceof Player) {
         entity.draw();
       }
+    }
+
+    if (random(1) < 0.005) {  // 0.5% chance per frame
+      const honey = this.createRandomHoney();
+      this.gameEntities.push(honey);
     }
     pop();
 
