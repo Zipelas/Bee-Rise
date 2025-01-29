@@ -2,6 +2,7 @@
 let game: Game;
 let music: {
 jumpSound: p5.SoundFile;
+backgroundMusic: p5.SoundFile;
 };
 
 let images: {
@@ -26,7 +27,8 @@ let images: {
  */
 function preload() {
   music = {
-  jumpSound: loadSound("/assets/music/jump.mp3")
+  jumpSound: loadSound("/assets/music/jump.mp3"),
+  backgroundMusic: loadSound("/assets/music/background.mp3"),
 }
 
   images = {
@@ -69,6 +71,8 @@ function setup() {
   window.addEventListener("click", resumeAudio);
 
   game = new Game();
+  music.backgroundMusic.loop();
+  music.backgroundMusic.setVolume(0.4);
 }
 
 /**
