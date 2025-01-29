@@ -137,14 +137,21 @@ class GameWorld implements Scene {
     push();
     translate(this.cameraOffset.x, this.cameraOffset.y);
   
-    // Draw game entities (flowers first, player after)
+    // Draw game entities (flowers first, honey, then player)
     for (const entity of this.gameEntities) {
       if (entity instanceof Flower) {
         entity.draw();
       }
     }
   
-    // Draw player last to make sure it appears on top of the flowers
+    // Draw honey (power-ups) after flowers
+    for (const entity of this.gameEntities) {
+      if (entity instanceof Honey) {
+        entity.draw();
+      }
+    }
+  
+    // Draw player last to make sure it appears on top of the flowers and honey
     const player = this.gameEntities.find(e => e instanceof Player);
     if (player) {
       player.draw();
@@ -162,7 +169,7 @@ class GameWorld implements Scene {
   
     // Draw the score (outside of camera transform)
     this.score.draw();
-  
+    
     // Ensure honey is added at correct intervals
     if (random(1) < 0.005) {
       this.gameEntities.push(this.createRandomHoney());
