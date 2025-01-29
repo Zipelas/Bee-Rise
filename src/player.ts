@@ -40,5 +40,9 @@ class Player extends Entity {
 
   public jump() {
     this.velocity.y = -this.jumpStrength;
+    
+    if (jumpSound) {
+      jumpSound.play();
+    }
   }
 }
