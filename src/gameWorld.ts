@@ -107,8 +107,7 @@ class GameWorld implements Scene {
             if (otherEntity instanceof Flower) {
               gameEntity.jump(); // example reaction
             } else if (otherEntity instanceof Enemy) {
-              gameEntity.velocity.y = 10;
-              gameEntity.position.y = height + 100;
+              game.changeScene("gameover");
             }
           }
         }
@@ -117,33 +116,13 @@ class GameWorld implements Scene {
   }
 
   private entitiesCollide(o1: Entity, o2: Entity): boolean {
-    if (o2 instanceof Flower) {
-      // Flower center
-      const flowerCenterX = o2.position.x + o2.size.x / 2;
-      const flowerCenterY = o2.position.y + o2.size.y / 2;
-      const flowerCenterRadius = o2.size.x / 4; // Assume the yellow part is a circle with radius size.x / 4
-
-      // Check if the player's center is within the flower's center circle
-      const playerCenterX = o1.position.x + o1.size.x / 2;
-      const playerCenterY = o1.position.y + o1.size.y / 2;
-
-      const distance = dist(
-        playerCenterX,
-        playerCenterY,
-        flowerCenterX,
-        flowerCenterY
-      );
-      return distance <= flowerCenterRadius;
-    }
-
-    // Default rectangle collision
-    return (
-      o1.position.x < o2.position.x + o2.size.x &&
-      o1.position.x + o1.size.x > o2.position.x &&
-      o1.position.y < o2.position.y + o2.size.y &&
-      o1.position.y + o1.size.y > o2.position.y
-    );
-  }
+    const distance = dist(
+      o1.hitBoxPos.x, o1.hitBoxPos.y,
+      o2.hitBoxPos.x, o2.hitBoxPos.y
+    ); // dist(x1, y1, x2, y2) räknar ut avståndet mellan två punkter (hitboxarnas mittpunkter).
+    return distance <= o1.hitBoxRadius + o2.hitBoxRadius;
+    } // Om avståndet är mindre än eller lika med summan av de två hitboxarnas radier = kollision!
+  
 
   private checkPlayerFall() {
     const player = this.gameEntities.find((entity) => entity instanceof Player);
