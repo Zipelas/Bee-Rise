@@ -4,6 +4,11 @@ let music: {
 jumpSound: p5.SoundFile;
 backgroundMusic: p5.SoundFile;
 };
+let enemySounds: {
+  bird: p5.SoundFile;
+  ufo: p5.SoundFile;
+  plane: p5.SoundFile;
+};
 
 let images: {
   player: p5.Image;
@@ -30,7 +35,13 @@ function preload() {
   music = {
   jumpSound: loadSound("/assets/music/jump.mp3"),
   backgroundMusic: loadSound("/assets/music/background.mp3"),
-}
+  };
+
+  enemySounds = {
+    bird: loadSound("/assets/music/bird.mp3"),
+    ufo: loadSound("/assets/music/ufo.mp3"),
+    plane: loadSound("/assets/music/airplane.mp3"),
+  };
 
   images = {
     flower: loadImage("/assets/images/flower1.png"),
