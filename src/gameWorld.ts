@@ -24,7 +24,16 @@ class GameWorld implements Scene {
     this.gameEntities = [new Player(), this.createRandomEnemy()];
     this.cloudImage = images.cloud;
     const scorePosition = createVector(-100, -100);
-    this.score = new Score("black", 0, 0, scorePosition, images.score);
+    
+    this.score = new Score(
+    "black",         
+    0,              
+    0,            
+    scorePosition, 
+    images.sun,  
+    images.moon
+    );
+
     this.cameraOffset = createVector(0, 0);
     this.highestYReached = Infinity;
     this.spawnInterval = 400;
@@ -278,6 +287,8 @@ class GameWorld implements Scene {
       red(currentColor) * 0.299 +
       green(currentColor) * 0.587 +
       blue(currentColor) * 0.114;
+
+      this.score.updateImage(backgroundBrightness);
 
     const maxBrightness = Math.max(
       ...this.skyColors.map((c) => red(c) * 0.299 + green(c) * 0.587 + blue(c) * 0.114)
