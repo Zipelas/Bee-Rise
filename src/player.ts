@@ -1,9 +1,9 @@
 class Player extends Entity {
-  private jumpStrength: number = 12;
-  private gravity: number = 0.2;
+  private jumpStrength: number = 8;
+  private gravity: number = 0.1;
   private groundLevel: number;
   private powerUpActive: boolean = false;
-  private powerUpDuration: number = 300; // Lasts for 300 frames (~5 seconds)
+  private powerUpDuration: number = 300;
   private powerUpTimer: number = 0;
 
   constructor() {
