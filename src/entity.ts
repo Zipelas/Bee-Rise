@@ -43,11 +43,6 @@ class Entity {
       this.size.x,
       this.size.y
     );
-    noFill();
-    stroke("red");
-    circle(this.hitBoxPos.x, this.hitBoxPos.y, this.hitBoxRadius * 2);
-
-    //sätt rn border för att se hitbox
     pop();
   }
 }
