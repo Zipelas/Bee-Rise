@@ -84,6 +84,7 @@ class GameWorld implements Scene {
           if (this.entitiesCollide(gameEntity, otherEntity)) {
             if (otherEntity instanceof Flower) {
               gameEntity.jump();
+              otherEntity.playBounceAnimation();
             } else if (otherEntity instanceof Honey) {
               otherEntity.applyEffect(this.score);
               this.gameEntities = this.gameEntities.filter(
