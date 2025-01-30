@@ -16,14 +16,14 @@ class Flower extends Entity {
 
   public playBounceAnimation() {
     this.bounceAnimationTimer = 300;
-    // byt bild till gif
+   images.floweranimation // gif
   }
 
   public update() {
     super.update();
     this.bounceAnimationTimer -= deltaTime;
     if (this.bounceAnimationTimer < 0) {
-      // byt till originalbild
+      images.flower // byt till originalbild
     }
   }
 

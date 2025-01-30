@@ -12,6 +12,7 @@ let enemySounds: {
 
 let images: {
   player: p5.Image;
+  floweranimation: p5.Image;
   bird: p5.Image;
   ufo: p5.Image;
   plane: p5.Image;
@@ -44,7 +45,8 @@ function preload() {
   };
 
   images = {
-    flower: loadImage("/assets/images/flower1.png"),
+    flower: loadImage("/assets/images/IMG-flower1.PNG"),
+    floweranimation: loadImage("assets/images/floweranimation.gif"),
     player: loadImage("/assets/images/bee.gif"),
     bird: loadImage("/assets/images/bird.gif"),
     ufo: loadImage("/assets/images/ufo.gif"),
