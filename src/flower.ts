@@ -21,7 +21,7 @@ class Flower extends Entity {
 
   public playBounceAnimation() {
     console.log("Blommans animation är igång");
-    this.bounceAnimationTimer = 300;
+    this.bounceAnimationTimer = 3000;
     this.image = images.floweranimation;
   }
 
