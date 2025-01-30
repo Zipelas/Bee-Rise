@@ -24,7 +24,8 @@ let images: {
   repeatImage: p5.Image;
   cloud: p5.Image;
   score: p5.Image;
-  star: p5.Image
+  star: p5.Image;
+  honey: p5.Image;
 };
 
 /**
@@ -58,7 +59,8 @@ function preload() {
     repeatImage: loadImage("/assets/images/repeat.png"),
     cloud: loadImage("assets/images/cloud.png"),
     score: loadImage("assets/images/sun.png"),
-    star: loadImage("assets/images/star1.png")
+    star: loadImage("assets/images/star1.png"),
+    honey: loadImage("assets/images/honey.png"),
   };
 }
 

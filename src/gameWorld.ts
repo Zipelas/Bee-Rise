@@ -13,8 +13,10 @@ class GameWorld implements Scene {
   private transitionDuration: number;
   private startTime: number;
 
-  // Tracks the time we last spawned an enemy
-  private lastEnemySpawnTime: number;
+  private clouds: Moln[];
+
+  private honeySpawnInterval: number; // Tid mellan honungar (millisekunder)
+  private lastHoneySpawnTime: number; 
 
   constructor() {
     this.gameEntities = [new Player(), this.createRandomEnemy()];
@@ -30,17 +32,16 @@ class GameWorld implements Scene {
     this.nextFlowerSpawnY = height - 400;
     this.lastFlowerPosition = createVector(width * 0.5, height * 0.95);
     this.floatingTexts = [];
-
+    this.clouds = [];
+    this.honeySpawnInterval = 5000; // 5 sekunder mellan honungar
+    this.lastHoneySpawnTime = millis();
     this.initializeClouds();
     this.initializeFlowers();
     this.generateBottomPlatform();
 
     this.skyColors = [color("#2a9ec7"), color("#1f6b91"), color("#2d2f3b")];
-    this.transitionDuration = 30000; // övergångstid i millisekunder
-    this.startTime = millis();      // Starttid för färgövergång
-
-    // Initialize the enemy-spawn timer
-    this.lastEnemySpawnTime = millis();
+    this.transitionDuration = 30000;
+    this.startTime = millis();
   }
 
   private createRandomEnemy(): Enemy {
@@ -50,23 +51,44 @@ class GameWorld implements Scene {
   }
 
   private initializeClouds() {
-    const cloudPositions: { x: number; y: number }[] = [];
-    for (let i = 0; i < 5; i++) {
-      let x: number, y: number;
-      let validPosition = false;
-      while (!validPosition) {
-        x = random(0, width + 1200);
-        y = random(0, height + 1000);
-        validPosition = cloudPositions.every((pos) => {
-          return dist(pos.x, pos.y, x, y) > 100;
-        });
-        if (validPosition) cloudPositions.push({ x, y });
+      const cloudCount = 5;
+      const minDistance = 400;
+      const maxAttempts = 700;
+    
+      for (let i = 0; i < cloudCount; i++) {
+        let attempts = 0;
+        let validPosition = false;
+        let x: number = 0;
+        let y: number = 0;
+    
+        while (!validPosition && attempts < maxAttempts) {
+          x = random(50, width - 50);
+          y = random(50, height - 50);
+    
+          validPosition = this.clouds.every(cloud => {
+            const distance = dist(x, y, cloud.position.x, cloud.position.y);
+            return distance > minDistance;
+          });
+    
+          attempts++;
+        }
+    
+        if (validPosition) {
+          
+          const cloudWidth = random(80, 200);
+          const cloudHeight = random(50, 100);
+          const cloud = new Moln(x, y, cloudWidth, cloudHeight, 0, this.cloudImage);
+          this.clouds.push(cloud);
+          console.log(`Moln ${i + 1} skapades på (${x}, ${y}).`);
+        } else {
+          console.warn(`Moln ${i + 1} kunde inte placeras efter ${maxAttempts} försök.`);
+        }
       }
-      this.gameEntities.push(
-        new Moln(x, y, random(50, 150), random(30, 80), 0, this.cloudImage)
-      );
+    
+      console.log(`Totalt ${this.clouds.length} moln skapades.`);
     }
-  }
+    
+    
 
   private initializeFlowers() {
     for (let i = 0; i < 7; i++) {
@@ -153,12 +175,24 @@ class GameWorld implements Scene {
     }
   }
 
-  private createRandomHoney(): Honey {
-    return new Honey(
-      random(width * 0.3, width * 0.7),
-      this.highestYReached - random(500, 1200)
-    );
+  private createRandomHoney() {
+    const now = millis();
+
+  if (now - this.lastHoneySpawnTime > this.honeySpawnInterval) {
+    // Begränsa antalet honung som kan finnas i spelet
+    const honeyCount = this.gameEntities.filter((entity) => entity instanceof Honey).length;
+    const maxHoney = 3; // Max 3 honung samtidigt
+
+    if (honeyCount < maxHoney) {
+      const honey = new Honey(
+        random(width * 0.3, width * 0.7),
+        this.highestYReached - random(500, 1000)
+      );
+      this.gameEntities.push(honey);
+      this.lastHoneySpawnTime = now;
+    }
   }
+}
 
   public update() {
     // 1) Update each entity
@@ -166,7 +200,11 @@ class GameWorld implements Scene {
       entity.update();
     }
 
-    // Find the player for camera updates
+
+    for (const cloud of this.clouds) {
+      cloud.update(); // Om Moln har någon logik i framtiden
+    }
+
     const player = this.gameEntities.find((e) => e instanceof Player) as Player;
     if (player) {
       // Camera follows player
@@ -216,21 +254,55 @@ class GameWorld implements Scene {
   }
 
   public draw(): void {
-    // Handle background color transition
-    const elapsedTime = millis() - this.startTime;
-    const phase = floor(elapsedTime / this.transitionDuration);
-    const t = (elapsedTime % this.transitionDuration) / this.transitionDuration;
 
-    let currentColor: p5.Color;
-    if (phase < this.skyColors.length - 1) {
-      currentColor = lerpColor(this.skyColors[phase], this.skyColors[phase + 1], t);
-    } else {
-      currentColor = this.skyColors[this.skyColors.length - 1];
-    }
-    background(currentColor);
+        // Hantera bakgrundsfärgövergången
+        const elapsedTime = millis() - this.startTime;
+        const phase = floor(elapsedTime / this.transitionDuration);
+        const t = (elapsedTime % this.transitionDuration) / this.transitionDuration;
+    
+        let currentColor: p5.Color;
+    
+        if (phase < this.skyColors.length - 1) {
+            currentColor = lerpColor(this.skyColors[phase], this.skyColors[phase + 1], t);
+        } else {
+            currentColor = this.skyColors[this.skyColors.length - 1];
+        }
+    
+        background(currentColor);
 
-    push();
-    translate(this.cameraOffset.x, this.cameraOffset.y);
+        const backgroundBrightness = red(currentColor) * 0.299 + green(currentColor) * 0.587 + blue(currentColor) * 0.114;
+
+  // Hämta max och min ljusstyrka från skyColors
+  const maxBrightness = Math.max(
+    ...this.skyColors.map(color => {
+      return red(color) * 0.299 + green(color) * 0.587 + blue(color) * 0.114;
+    })
+  );
+  const minBrightness = Math.min(
+    ...this.skyColors.map(color => {
+      return red(color) * 0.299 + green(color) * 0.587 + blue(color) * 0.114;
+    })
+  );
+
+  // Normalisera ljusstyrkan för molnen
+  const cloudDarkness = map(
+    backgroundBrightness,
+    minBrightness,
+    maxBrightness,
+    0.3,
+    1
+  );
+
+  console.log("Background Brightness:", backgroundBrightness, "Cloud Darkness:", cloudDarkness);
+
+  // Uppdatera molnens mörkhetsgrad och rita dem
+  for (const cloud of this.clouds) {
+    cloud.setDarkness(cloudDarkness);
+    cloud.draw();
+  }
+
+  push();
+  translate(this.cameraOffset.x, this.cameraOffset.y);
 
     // Draw flowers first
     for (const entity of this.gameEntities) {
@@ -251,6 +323,7 @@ class GameWorld implements Scene {
       if (entity instanceof Enemy) {
         entity.draw();
       }
+      
       if (entity instanceof Moln) {
         entity.draw();
       }

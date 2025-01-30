@@ -2,7 +2,7 @@
 
 class Honey extends Entity {
     constructor(x: number, y: number) {
-      super(x, y, 50, 50, 0, 0, images.star);
+      super(x, y, 50, 50, 0, 0, images.honey);
     }
   
     public applyEffect(score: Score) {
