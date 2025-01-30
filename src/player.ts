@@ -1,5 +1,5 @@
 class Player extends Entity {
-  private jumpStrength: number = 10;
+  private jumpStrength: number = 12;
   private gravity: number = 0.2;
   private groundLevel: number;
   private powerUpActive: boolean = false;

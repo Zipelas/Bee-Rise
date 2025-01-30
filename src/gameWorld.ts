@@ -69,10 +69,10 @@ class GameWorld implements Scene {
   }
 
   private initializeFlowers() {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 7; i++) {
       const flower = new Flower();
       flower.position = createVector(
-        random(width * 0.3, width * 0.6),
+        random(width * 0.2, width * 0.7),
         this.lastFlowerPosition.y - random(200, 500)
       );
       this.lastFlowerPosition = flower.position;
@@ -83,6 +83,7 @@ class GameWorld implements Scene {
   private generateBottomPlatform() {
     const bottomFlower = new Flower();
     bottomFlower.position = createVector(width / 2, height - 50);
+    bottomFlower.moving = false
     this.gameEntities.push(bottomFlower);
   }
 
@@ -94,6 +95,7 @@ class GameWorld implements Scene {
           if (this.entitiesCollide(gameEntity, otherEntity)) {
             if (otherEntity instanceof Flower) {
               gameEntity.jump();
+              otherEntity.playBounceAnimation();
             } else if (otherEntity instanceof Honey) {
               otherEntity.applyEffect(this.score);
               this.gameEntities = this.gameEntities.filter(
