@@ -46,7 +46,7 @@ function preload() {
 
   images = {
     flower: loadImage("/assets/images/IMG-flower1.PNG"),
-    floweranimation: loadImage("assets/images/floweranimation.gif"),
+    floweranimation: loadImage("assets/images/floweranimation.gif"), //När vi har rätt animationsfil så måste namnet bytas här
     player: loadImage("/assets/images/bee.gif"),
     bird: loadImage("/assets/images/bird.gif"),
     ufo: loadImage("/assets/images/ufo.gif"),

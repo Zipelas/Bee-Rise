@@ -59,10 +59,10 @@ class GameWorld implements Scene {
   }
 
   private initializeFlowers() {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 7; i++) {
       const flower = new Flower();
       flower.position = createVector(
-        random(width * 0.3, width * 0.6),
+        random(width * 0.2, width * 0.7),
         this.lastFlowerPosition.y - random(200, 500)
       );
       this.lastFlowerPosition = flower.position;
