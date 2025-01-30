@@ -13,6 +13,8 @@ class GameWorld implements Scene {
   private transitionDuration: number;
   private startTime: number;
 
+  private clouds: Moln[];
+
   constructor() {
     this.gameEntities = [new Player(), this.createRandomEnemy()];
     this.cloudImage = images.cloud;
@@ -24,6 +26,7 @@ class GameWorld implements Scene {
     this.nextFlowerSpawnY = height - 400;
     this.lastFlowerPosition = createVector(width * 0.5, height * 0.95);
     this.floatingTexts = [];
+    this.clouds = [];
     this.initializeClouds();
     this.initializeFlowers();
     this.generateBottomPlatform();
@@ -40,23 +43,46 @@ class GameWorld implements Scene {
   }
 
   private initializeClouds() {
-    const cloudPositions: { x: number; y: number }[] = [];
-    for (let i = 0; i < 5; i++) {
-      let x: number, y: number;
-      let validPosition = false;
-      while (!validPosition) {
-        x = random(0, width + 1200);
-        y = random(0, height + 1000);
-        validPosition = cloudPositions.every((pos) => {
-          return dist(pos.x, pos.y, x, y) > 100;
-        });
-        if (validPosition) cloudPositions.push({ x, y });
+      const cloudCount = 5; // Antal moln
+      const minDistance = 400; // Minimumavstånd mellan molnen
+      const maxAttempts = 700; // För att undvika oändlig loop
+    
+      for (let i = 0; i < cloudCount; i++) {
+        let attempts = 0;
+        let validPosition = false;
+        let x: number = 0;
+        let y: number = 0;
+    
+        // Försök hitta en giltig position för molnet
+        while (!validPosition && attempts < maxAttempts) {
+          x = random(50, width - 50); // Slumpmässig x-position
+          y = random(50, height - 50); // Slumpmässig y-position
+    
+          // Kontrollera avståndet till tidigare moln
+          validPosition = this.clouds.every(cloud => {
+            const distance = dist(x, y, cloud.position.x, cloud.position.y);
+            return distance > minDistance; // Kontrollera att avståndet är större än minimum
+          });
+    
+          attempts++;
+        }
+    
+        if (validPosition) {
+          // Skapa och placera molnet
+          const cloudWidth = random(80, 200); // Slumpmässig bredd
+          const cloudHeight = random(50, 100); // Slumpmässig höjd
+          const cloud = new Moln(x, y, cloudWidth, cloudHeight, 0, this.cloudImage);
+          this.clouds.push(cloud);
+          console.log(`Moln ${i + 1} skapades på (${x}, ${y}).`);
+        } else {
+          console.warn(`Moln ${i + 1} kunde inte placeras efter ${maxAttempts} försök.`);
+        }
       }
-      this.gameEntities.push(
-        new Moln(x, y, random(50, 150), random(30, 80), 0, this.cloudImage)
-      );
+    
+      console.log(`Totalt ${this.clouds.length} moln skapades.`);
     }
-  }
+    
+    
 
   private initializeFlowers() {
     for (let i = 0; i < 5; i++) {
@@ -141,6 +167,10 @@ class GameWorld implements Scene {
       entity.update();
     }
 
+    for (const cloud of this.clouds) {
+      cloud.update(); // Om Moln har någon logik i framtiden
+    }
+
     const player = this.gameEntities.find((e) => e instanceof Player) as Player;
     if (player) {
       this.cameraOffset.x = 0;
@@ -179,6 +209,10 @@ class GameWorld implements Scene {
         }
     
         background(currentColor);
+
+        for (const cloud of this.clouds) {
+          cloud.draw();
+        }
     
     push();
     translate(this.cameraOffset.x, this.cameraOffset.y);
