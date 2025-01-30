@@ -34,7 +34,7 @@ function preload() {
 
   images = {
     flower: loadImage("/assets/images/flower1.png"),
-    player: loadImage("/assets/images/bee.png"),
+    player: loadImage("/assets/images/bee.gif"),
     bird: loadImage("/assets/images/bird.gif"),
     ufo: loadImage("/assets/images/ufo.gif"),
     plane: loadImage("/assets/images/Plane.gif"),
