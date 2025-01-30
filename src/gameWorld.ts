@@ -32,8 +32,8 @@ class GameWorld implements Scene {
     this.generateBottomPlatform();
 
   this.skyColors = [color("#2a9ec7"), color("#1f6b91"), color("#2d2f3b")];
-    this.transitionDuration = 30000; // övergång tid sekunder
-    this.startTime = millis(); // Starttid för färgövergång
+    this.transitionDuration = 30000;
+    this.startTime = millis();
   }
 
   private createRandomEnemy(): Enemy {
@@ -43,9 +43,9 @@ class GameWorld implements Scene {
   }
 
   private initializeClouds() {
-      const cloudCount = 5; // Antal moln
-      const minDistance = 400; // Minimumavstånd mellan molnen
-      const maxAttempts = 700; // För att undvika oändlig loop
+      const cloudCount = 5;
+      const minDistance = 400;
+      const maxAttempts = 700;
     
       for (let i = 0; i < cloudCount; i++) {
         let attempts = 0;
@@ -53,24 +53,22 @@ class GameWorld implements Scene {
         let x: number = 0;
         let y: number = 0;
     
-        // Försök hitta en giltig position för molnet
         while (!validPosition && attempts < maxAttempts) {
-          x = random(50, width - 50); // Slumpmässig x-position
-          y = random(50, height - 50); // Slumpmässig y-position
+          x = random(50, width - 50);
+          y = random(50, height - 50);
     
-          // Kontrollera avståndet till tidigare moln
           validPosition = this.clouds.every(cloud => {
             const distance = dist(x, y, cloud.position.x, cloud.position.y);
-            return distance > minDistance; // Kontrollera att avståndet är större än minimum
+            return distance > minDistance;
           });
     
           attempts++;
         }
     
         if (validPosition) {
-          // Skapa och placera molnet
-          const cloudWidth = random(80, 200); // Slumpmässig bredd
-          const cloudHeight = random(50, 100); // Slumpmässig höjd
+          
+          const cloudWidth = random(80, 200);
+          const cloudHeight = random(50, 100);
           const cloud = new Moln(x, y, cloudWidth, cloudHeight, 0, this.cloudImage);
           this.clouds.push(cloud);
           console.log(`Moln ${i + 1} skapades på (${x}, ${y}).`);
@@ -210,12 +208,40 @@ class GameWorld implements Scene {
     
         background(currentColor);
 
-        for (const cloud of this.clouds) {
-          cloud.draw();
-        }
-    
-    push();
-    translate(this.cameraOffset.x, this.cameraOffset.y);
+        const backgroundBrightness = red(currentColor) * 0.299 + green(currentColor) * 0.587 + blue(currentColor) * 0.114;
+
+  // Hämta max och min ljusstyrka från skyColors
+  const maxBrightness = Math.max(
+    ...this.skyColors.map(color => {
+      return red(color) * 0.299 + green(color) * 0.587 + blue(color) * 0.114;
+    })
+  );
+  const minBrightness = Math.min(
+    ...this.skyColors.map(color => {
+      return red(color) * 0.299 + green(color) * 0.587 + blue(color) * 0.114;
+    })
+  );
+
+  // Normalisera ljusstyrkan för molnen
+  const cloudDarkness = map(
+    backgroundBrightness,
+    minBrightness,
+    maxBrightness,
+    0.3,
+    1
+  );
+
+  console.log("Background Brightness:", backgroundBrightness, "Cloud Darkness:", cloudDarkness);
+
+  // Uppdatera molnens mörkhetsgrad och rita dem
+  for (const cloud of this.clouds) {
+    cloud.setDarkness(cloudDarkness);
+    cloud.draw();
+  }
+
+  push();
+  translate(this.cameraOffset.x, this.cameraOffset.y);
+      
 
     // Draw game entities (flowers first, honey, then enemies and clouds)
     for (const entity of this.gameEntities) {
@@ -236,6 +262,7 @@ class GameWorld implements Scene {
       if (entity instanceof Enemy) {
         entity.draw();
       }
+      
       if (entity instanceof Moln) {
         // Assuming Moln is the cloud class
         entity.draw();
