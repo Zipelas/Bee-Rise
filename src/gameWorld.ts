@@ -15,6 +15,9 @@ class GameWorld implements Scene {
 
   private clouds: Moln[];
 
+  private honeySpawnInterval: number; // Tid mellan honungar (millisekunder)
+  private lastHoneySpawnTime: number; 
+
   constructor() {
     this.gameEntities = [new Player(), this.createRandomEnemy()];
     this.cloudImage = images.cloud;
@@ -27,11 +30,13 @@ class GameWorld implements Scene {
     this.lastFlowerPosition = createVector(width * 0.5, height * 0.95);
     this.floatingTexts = [];
     this.clouds = [];
+    this.honeySpawnInterval = 5000; // 5 sekunder mellan honungar
+    this.lastHoneySpawnTime = millis();
     this.initializeClouds();
     this.initializeFlowers();
     this.generateBottomPlatform();
 
-  this.skyColors = [color("#2a9ec7"), color("#1f6b91"), color("#2d2f3b")];
+    this.skyColors = [color("#2a9ec7"), color("#1f6b91"), color("#2d2f3b")];
     this.transitionDuration = 30000;
     this.startTime = millis();
   }
@@ -153,12 +158,24 @@ class GameWorld implements Scene {
     }
   }
 
-  private createRandomHoney(): Honey {
-    return new Honey(
-      random(width * 0.3, width * 0.7),
-      this.highestYReached - random(500, 1200)
-    );
+  private createRandomHoney() {
+    const now = millis();
+
+  if (now - this.lastHoneySpawnTime > this.honeySpawnInterval) {
+    // Begränsa antalet honung som kan finnas i spelet
+    const honeyCount = this.gameEntities.filter((entity) => entity instanceof Honey).length;
+    const maxHoney = 3; // Max 3 honung samtidigt
+
+    if (honeyCount < maxHoney) {
+      const honey = new Honey(
+        random(width * 0.3, width * 0.7),
+        this.highestYReached - random(500, 1000)
+      );
+      this.gameEntities.push(honey);
+      this.lastHoneySpawnTime = now;
+    }
   }
+}
 
   public update() {
     for (const entity of this.gameEntities) {
@@ -287,10 +304,5 @@ class GameWorld implements Scene {
 
     // Draw the score (outside of camera transform)
     this.score.draw();
-
-    // Ensure honey is added at correct intervals
-    if (random(1) < 0.005) {
-      this.gameEntities.push(this.createRandomHoney());
-    }
   }
 }
