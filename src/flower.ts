@@ -1,5 +1,7 @@
 class Flower extends Entity {
   private bounceAnimationTimer: number;
+  public moving: boolean; // Ska blomman röra sig?
+  private direction: number; // Rörelseriktning (-1 eller 1)
 
   constructor() {
     super(
@@ -11,19 +13,28 @@ class Flower extends Entity {
       0,
       images.flower
     );
+
     this.bounceAnimationTimer = 0;
+    this.moving = random() < 0.2;
+    this.direction = random() < 0.5 ? 1 : -1;
   }
 
   public playBounceAnimation() {
+    console.log("Blommans animation är igång");
     this.bounceAnimationTimer = 300;
-    // byt bild till gif
+    this.image = images.floweranimation;
   }
 
   public update() {
     super.update();
+
     this.bounceAnimationTimer -= deltaTime;
-    if (this.bounceAnimationTimer < 0) {
-      // byt till originalbild
+    if (this.bounceAnimationTimer <= 0) {
+      console.log("Animation avslutad");
+      this.image = images.flower; // byt till originalbild
+    }
+    if (this.moving) {
+      this.position.x += this.direction * sin(millis() * 0.002) * 2;
     }
   }
 

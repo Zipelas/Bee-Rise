@@ -24,6 +24,9 @@ class GameWorld implements Scene {
     const scorePosition = createVector(-100, -100);
     this.score = new Score("black", 0, 0, scorePosition, images.score);
     this.cameraOffset = createVector(0, 0);
+
+    // Start at Infinity so the first time we compare player's Y,
+    // it sets highestYReached to player's current Y
     this.highestYReached = Infinity;
     this.spawnInterval = 400;
     this.nextFlowerSpawnY = height - 400;
@@ -88,10 +91,10 @@ class GameWorld implements Scene {
     
 
   private initializeFlowers() {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 7; i++) {
       const flower = new Flower();
       flower.position = createVector(
-        random(width * 0.3, width * 0.6),
+        random(width * 0.2, width * 0.7),
         this.lastFlowerPosition.y - random(200, 500)
       );
       this.lastFlowerPosition = flower.position;
@@ -102,6 +105,7 @@ class GameWorld implements Scene {
   private generateBottomPlatform() {
     const bottomFlower = new Flower();
     bottomFlower.position = createVector(width / 2, height - 50);
+    bottomFlower.moving = false
     this.gameEntities.push(bottomFlower);
   }
 
@@ -113,6 +117,7 @@ class GameWorld implements Scene {
           if (this.entitiesCollide(gameEntity, otherEntity)) {
             if (otherEntity instanceof Flower) {
               gameEntity.jump();
+              otherEntity.playBounceAnimation();
             } else if (otherEntity instanceof Honey) {
               otherEntity.applyEffect(this.score);
               this.gameEntities = this.gameEntities.filter(
@@ -141,9 +146,21 @@ class GameWorld implements Scene {
     );
   }
 
+  // Checks if player has fallen 1000px below their highest point
   private checkPlayerFall() {
     const player = this.gameEntities.find((e) => e instanceof Player);
-    if (player && player.position.y > height) game.changeScene("gameover");
+    if (!player) return;
+
+    // If player's y > height (off bottom of screen), game over
+    if (player.position.y > height) {
+      game.changeScene("gameover");
+      return;
+    }
+
+    // If the player has fallen 1000 px below highest reached point, game over
+    if (player.position.y - this.highestYReached >= 1000) {
+      game.changeScene("gameover");
+    }
   }
 
   private spawnFlowersAbovePlayer(playerY: number) {
@@ -178,9 +195,11 @@ class GameWorld implements Scene {
 }
 
   public update() {
+    // 1) Update each entity
     for (const entity of this.gameEntities) {
       entity.update();
     }
+
 
     for (const cloud of this.clouds) {
       cloud.update(); // Om Moln har någon logik i framtiden
@@ -188,21 +207,46 @@ class GameWorld implements Scene {
 
     const player = this.gameEntities.find((e) => e instanceof Player) as Player;
     if (player) {
+      // Camera follows player
       this.cameraOffset.x = 0;
-      this.cameraOffset.y =
-        height * 0.7 - (player.position.y + player.size.y / 2);
+      this.cameraOffset.y = height * 0.7 - (player.position.y + player.size.y / 2);
+
+      // Update highestYReached if player goes higher (smaller y)
       if (player.position.y < this.highestYReached) {
         this.highestYReached = player.position.y;
         this.score.update();
       }
+
+      // Spawn new flowers when passing nextFlowerSpawnY
       if (player.position.y < this.nextFlowerSpawnY) {
         this.spawnFlowersAbovePlayer(player.position.y);
         this.nextFlowerSpawnY -= this.spawnInterval;
       }
+
+      const now = millis();
+      if (now - this.lastEnemySpawnTime >= 5000) {
+        const newEnemy = this.createRandomEnemy();
+
+        // Position it offscreen left
+        newEnemy.position.x = -300;
+        // 2000 px above player's Y
+        newEnemy.position.y = player.position.y - 2000;
+
+        this.gameEntities.push(newEnemy);
+
+        // Reset the spawn timer
+        this.lastEnemySpawnTime = now;
+      }
     }
+
+    // Check falling and collisions
     this.checkPlayerFall();
     this.checkCollision();
-    this.createRandomHoney();
+
+    // Occasionally spawn honey
+    if (random(1) < 0.005) {
+      this.gameEntities.push(this.createRandomHoney());
+    }
 
     // Update floating texts
     this.floatingTexts.forEach((text) => text.update());
@@ -210,6 +254,7 @@ class GameWorld implements Scene {
   }
 
   public draw(): void {
+
         // Hantera bakgrundsfärgövergången
         const elapsedTime = millis() - this.startTime;
         const phase = floor(elapsedTime / this.transitionDuration);
@@ -258,16 +303,15 @@ class GameWorld implements Scene {
 
   push();
   translate(this.cameraOffset.x, this.cameraOffset.y);
-      
 
-    // Draw game entities (flowers first, honey, then enemies and clouds)
+    // Draw flowers first
     for (const entity of this.gameEntities) {
       if (entity instanceof Flower) {
         entity.draw();
       }
     }
 
-    // Draw honey (power-ups) after flowers
+    // Draw honey
     for (const entity of this.gameEntities) {
       if (entity instanceof Honey) {
         entity.draw();
@@ -281,20 +325,19 @@ class GameWorld implements Scene {
       }
       
       if (entity instanceof Moln) {
-        // Assuming Moln is the cloud class
         entity.draw();
       }
     }
 
-    // Draw player last to make sure it appears on top of the flowers, honey, enemies, and clouds
+    // Draw player last
     const player = this.gameEntities.find((e) => e instanceof Player);
     if (player) {
       player.draw();
     }
 
-    pop(); // Ensure text is not affected by camera translation
+    pop(); // end camera transform
 
-    // Draw floating texts correctly
+    // Draw floating texts (translate inside so they move with camera)
     this.floatingTexts.forEach((text) => {
       push();
       translate(this.cameraOffset.x, this.cameraOffset.y);
@@ -302,7 +345,7 @@ class GameWorld implements Scene {
       pop();
     });
 
-    // Draw the score (outside of camera transform)
+    // Draw the score above everything else
     this.score.draw();
   }
 }
