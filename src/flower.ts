@@ -1,6 +1,6 @@
 class Flower extends Entity {
   private bounceAnimationTimer: number;
-  private moving: boolean; // Ska blomman röra sig?
+  public moving: boolean; // Ska blomman röra sig?
   private direction: number; // Rörelseriktning (-1 eller 1)
 
 

@@ -73,6 +73,7 @@ class GameWorld implements Scene {
   private generateBottomPlatform() {
     const bottomFlower = new Flower();
     bottomFlower.position = createVector(width / 2, height - 50);
+    bottomFlower.moving = false
     this.gameEntities.push(bottomFlower);
   }
 
