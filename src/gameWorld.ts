@@ -175,7 +175,7 @@ class GameWorld implements Scene {
     }
   }
 
-  private spawnFlowersAbovePlayer(playerY: number) {
+  private spawnFlowersAbovePlayer() {
     for (let i = 0; i < 2; i++) {
       const flower = new Flower();
       flower.position = createVector(
@@ -233,7 +233,7 @@ class GameWorld implements Scene {
 
       // Spawn new flowers based on player's Y
       if (player.position.y < this.nextFlowerSpawnY) {
-        this.spawnFlowersAbovePlayer(player.position.y);
+        this.spawnFlowersAbovePlayer();
         this.nextFlowerSpawnY -= this.spawnInterval;
       }
 

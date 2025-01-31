@@ -7,7 +7,7 @@ class Button {
   private backgroundColor: string;
   private textColor: string;
   private font: string;
-  private cornerRadius?: number;
+  private cornerRadius: number;
   private textSize: number;
   private image?: p5.Image;
   private noBorder: boolean;
@@ -21,8 +21,8 @@ class Button {
     backgroundColor: string,
     textColor: string,
     font: string,
-    image: p5.Image,
-    cornerRadius?: number,
+    image: p5.Image | undefined,
+    cornerRadius: number,
     textSize: number,
     noBorder: boolean = false
   ) {
@@ -37,7 +37,7 @@ class Button {
     this.image = image;
     this.x = x;
     this.y = y;
-    this.noBorder = noBorder
+    this.noBorder = noBorder;
   }
 
   public draw() {
